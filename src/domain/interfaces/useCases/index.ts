@@ -1,1 +1,1 @@
-export * from './ICreatePlayerUseCase';
+export * from './players';
