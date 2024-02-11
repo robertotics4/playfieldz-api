@@ -19,6 +19,7 @@
   ],
   "rules": {
     "no-constant-condition": "off",
+    "no-shadow": "off",
     "no-await-in-loop": "off",
     "no-use-before-define": "off",
     "no-restricted-syntax": "off",
