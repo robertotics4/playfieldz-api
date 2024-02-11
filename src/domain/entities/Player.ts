@@ -1,19 +1,10 @@
 export enum PlayerPosition {
-  Goleiro = 'GK',
-  Defensor = 'DF',
-  ZagueiroCentral = 'CB',
-  Lateral = 'FB',
-  LateralAla = 'WB',
-  Libero = 'SW',
-  MeioCampista = 'MF',
-  MeioCampistaCentral = 'CM',
-  MeioCampistaDefensivo = 'DM',
-  MeioCampistaOfensivo = 'AM',
-  Ala = 'W',
-  Atacante = 'FW',
-  AtacanteCentroavante = 'ST',
-  AtacanteCentro = 'CF',
-  SegundoAtacante = 'SS',
+  GK = 'Goleiro',
+  CB = 'Zagueiro',
+  FB = 'Lateral',
+  DM = 'Volante',
+  MF = 'MeioCampo',
+  FW = 'Atacante',
 }
 
 abstract class PlayerProps {

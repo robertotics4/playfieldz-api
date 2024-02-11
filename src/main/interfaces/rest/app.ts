@@ -4,6 +4,7 @@ import swaggerJSDoc from 'swagger-jsdoc';
 import { errors } from 'celebrate';
 import { env } from '@/main/config/env';
 import swaggerDocs from '@/main/config/swaggerDocs';
+import { router } from './routes';
 
 const app = express();
 
@@ -15,5 +16,6 @@ app.use(
 );
 
 app.use(errors());
+app.use(router);
 
 export { app };
