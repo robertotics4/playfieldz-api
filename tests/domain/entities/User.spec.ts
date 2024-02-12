@@ -14,7 +14,7 @@ describe('User', () => {
     expect(user instanceof User).toBeTruthy();
   });
 
-  it('should properly initialize player properties', () => {
+  it('should properly initialize user properties', () => {
     const user = new User(userData);
     expect(user.id).toEqual(userData.id);
     expect(user.password).toEqual(userData.password);
