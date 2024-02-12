@@ -1,7 +1,9 @@
 import { randomUUID } from 'node:crypto';
 import { User } from '@/domain';
 import { IUserRepository } from '@/domain/interfaces/repositories/IUserRepository';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class UserRepositoryInMemory implements IUserRepository {
   private readonly users: User[] = [];
 
@@ -20,7 +22,7 @@ export class UserRepositoryInMemory implements IUserRepository {
     return this.users;
   }
 
-  async update(id: string, data: Omit<User, 'id'>): Promise<User | null> {
+  async update(id: string, data: Partial<User>): Promise<User | null> {
     const userIndex = this.users.findIndex(user => user.id === id);
 
     if (userIndex === -1) {
@@ -42,5 +44,15 @@ export class UserRepositoryInMemory implements IUserRepository {
 
     this.users.splice(userIndex, 1);
     return true;
+  }
+
+  async findOne(filters: Partial<User>): Promise<User | null> {
+    const foundUser = this.users.find(user => {
+      return Object.entries(filters).every(([key, value]) => {
+        return user[key as keyof User] === value;
+      });
+    });
+
+    return foundUser || null;
   }
 }

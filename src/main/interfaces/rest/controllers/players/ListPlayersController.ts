@@ -1,16 +1,12 @@
-import { IListPlayersUseCase } from '@/domain/interfaces/useCases/players/IListPlayersUseCase';
 import { Request, Response } from 'express';
+import { container } from 'tsyringe';
+import { ListPlayersUseCase } from '@/application';
 
 export class ListPlayersController {
-  private listPlayersUseCase: IListPlayersUseCase;
-
-  constructor(listPlayersUseCase: IListPlayersUseCase) {
-    this.handle = this.handle.bind(this);
-    this.listPlayersUseCase = listPlayersUseCase;
-  }
-
   async handle(request: Request, response: Response): Promise<Response> {
-    const result = await this.listPlayersUseCase.execute();
+    const listPlayersUseCase = container.resolve(ListPlayersUseCase);
+
+    const result = await listPlayersUseCase.execute();
 
     return response.json(result);
   }

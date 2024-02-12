@@ -12,13 +12,14 @@ export type UserRole = {
 abstract class UserProps {
   constructor(
     public id: string,
+    public phone: string,
     public password: string,
-    public roles: UserRole[],
+    public roles?: UserRole[],
   ) {}
 }
 
 export class User extends UserProps {
   constructor(user: UserProps) {
-    super(user.id, user.password, user.roles);
+    super(user.id, user.phone, user.password, user.roles);
   }
 }

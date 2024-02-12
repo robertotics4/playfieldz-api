@@ -1,2 +1,2 @@
-export * from './CreatePlayerUseCase';
+export * from './CreateUserAndPlayerUseCase';
 export * from './ListPlayersUseCase';

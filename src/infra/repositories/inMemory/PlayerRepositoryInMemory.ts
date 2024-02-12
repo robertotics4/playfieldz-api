@@ -1,6 +1,8 @@
 import { randomUUID } from 'node:crypto';
 import { IPlayerRepository, Player } from '@/domain';
+import { injectable } from 'tsyringe';
 
+@injectable()
 export class PlayerRepositoryInMemory implements IPlayerRepository {
   private readonly players: Player[] = [];
 
@@ -19,7 +21,7 @@ export class PlayerRepositoryInMemory implements IPlayerRepository {
     return this.players;
   }
 
-  async update(id: string, data: Omit<Player, 'id'>): Promise<Player | null> {
+  async update(id: string, data: Partial<Player>): Promise<Player | null> {
     const playerIndex = this.players.findIndex(player => player.id === id);
 
     if (playerIndex === -1) {

@@ -1,5 +1,7 @@
+import 'reflect-metadata';
 import 'express-async-errors';
 import '../../config/module-alias';
+import '@/infra/container';
 
 import { env } from '@/main/config/env';
 

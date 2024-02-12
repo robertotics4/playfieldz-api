@@ -1,1 +1,1 @@
-export * from './CreatePlayerDTO';
+export * from './CreateUserAndPlayerDTO';

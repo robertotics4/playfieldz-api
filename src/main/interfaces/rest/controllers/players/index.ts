@@ -1,2 +1,2 @@
-export * from './CreatePlayerController';
-export * from './CreatePlayerController';
+export * from './ListPlayersController';
+export * from './CreateUserAndPlayerController';
