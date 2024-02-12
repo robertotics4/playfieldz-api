@@ -1,5 +1,6 @@
 import { MockProxy, mock } from 'jest-mock-extended';
 import {
+  AppError,
   ICreatePlayerUseCase,
   IPlayerRepository,
   PlayerPosition,
@@ -22,14 +23,29 @@ describe('CreatePlayerUseCase', () => {
       groupsId: [],
       phone: '5598985485698',
       position: PlayerPosition.CB,
-      score: 5,
+      score: 3,
     };
 
-    playerRepositoryStub.create.mockResolvedValueOnce({ ...dto, id: 'any_id' });
+    playerRepositoryStub.create.mockResolvedValue({ ...dto, id: 'any_id' });
   });
 
   beforeEach(() => {
     sut = new CreatePlayerUseCase(playerRepositoryStub);
+  });
+
+  it('should call playerRepository.create with correct params', async () => {
+    await sut.execute(dto);
+
+    expect(playerRepositoryStub.create).toHaveBeenCalledWith(dto);
+    expect(playerRepositoryStub.create).toHaveBeenCalledTimes(1);
+  });
+
+  it('should throw if playerRepository.create throws', async () => {
+    playerRepositoryStub.create.mockRejectedValueOnce(new Error());
+
+    const promise = sut.execute(dto);
+
+    expect(promise).rejects.toThrow();
   });
 
   it('should create an player', async () => {
@@ -39,11 +55,11 @@ describe('CreatePlayerUseCase', () => {
     expect(result).toBeTruthy();
   });
 
-  // it('should throw if score is invalid', async () => {
-  //   const playerWithInvalidScore = { ...dto, score: 0 };
+  it('should throw if score is invalid', async () => {
+    const playerWithInvalidScore = { ...dto, score: 0 };
 
-  //   const promise = sut.execute(playerWithInvalidScore);
+    const promise = sut.execute(playerWithInvalidScore);
 
-  //   expect(promise).toThrow();
-  // });
+    expect(promise).rejects.toBeInstanceOf(AppError);
+  });
 });
