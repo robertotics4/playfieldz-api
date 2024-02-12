@@ -10,6 +10,7 @@ describe('Player', () => {
     score: 90,
     phone: '123456789',
     groupsId: ['group1', 'group2'],
+    userId: 'any_user_id',
   };
 
   it('should create a player instance', () => {
@@ -28,5 +29,6 @@ describe('Player', () => {
     expect(player.score).toEqual(playerData.score);
     expect(player.phone).toEqual(playerData.phone);
     expect(player.groupsId).toEqual(playerData.groupsId);
+    expect(player.userId).toEqual(playerData.userId);
   });
 });

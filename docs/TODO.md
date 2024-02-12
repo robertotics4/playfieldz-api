@@ -18,3 +18,7 @@
 [ ] Deve ser possível listar partidas
 [ ] Deve ser possível um jogador confirmar ou não a própria presença na partida
 [ ] Só deve ser possível confirmar a presença até 1 hora antes da partida
+
+# Módulo de grupos
+[ ] Deve ser possível criar grupos
+[ ] O usuário que criou o grupo deve se tornar administrador nele

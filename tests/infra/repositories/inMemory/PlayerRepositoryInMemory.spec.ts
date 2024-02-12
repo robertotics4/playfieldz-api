@@ -14,6 +14,7 @@ describe('PlayerRepositoryInMemory', () => {
       phone: '5598985485698',
       position: PlayerPosition.CB,
       score: 3,
+      userId: 'any_user_id',
     };
   });
 

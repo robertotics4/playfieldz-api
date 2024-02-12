@@ -8,4 +8,5 @@ export type CreatePlayerDTO = {
   score: number;
   phone: string;
   groupsId: string[];
+  userId: string;
 };

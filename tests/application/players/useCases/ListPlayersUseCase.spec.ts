@@ -21,6 +21,7 @@ describe('ListPlayersUseCase', () => {
         phone: '5598985485698',
         position: PlayerPosition.CB,
         score: 3,
+        userId: 'any_user_id_1',
       },
       {
         id: 'any_id_2',
@@ -31,6 +32,7 @@ describe('ListPlayersUseCase', () => {
         phone: '5598985478569',
         position: PlayerPosition.FB,
         score: 4,
+        userId: 'any_user_id_2',
       },
     ];
 

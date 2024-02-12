@@ -24,6 +24,7 @@ describe('CreatePlayerUseCase', () => {
       phone: '5598985485698',
       position: PlayerPosition.CB,
       score: 3,
+      userId: 'any_user_id',
     };
 
     playerRepositoryStub.create.mockResolvedValue({ ...dto, id: 'any_id' });

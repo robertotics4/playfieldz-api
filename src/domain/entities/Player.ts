@@ -16,6 +16,7 @@ abstract class PlayerProps {
     public position: PlayerPosition,
     public score: number,
     public phone: string,
+    public userId: string,
     public groupsId: string[],
   ) {}
 }
@@ -30,6 +31,7 @@ export class Player extends PlayerProps {
       player.position,
       player.score,
       player.phone,
+      player.userId,
       player.groupsId,
     );
   }
