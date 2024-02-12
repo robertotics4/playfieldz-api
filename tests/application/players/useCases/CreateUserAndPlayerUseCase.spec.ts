@@ -111,6 +111,19 @@ describe('CreateUserAndPlayerUseCase', () => {
     expect(result).toBeTruthy();
   });
 
+  it('should throw if phone is already registered', async () => {
+    userRepositoryStub.findOne.mockResolvedValueOnce({
+      ...dto.user,
+      id: 'any_user_id',
+    });
+
+    const promise = sut.execute(dto);
+
+    await expect(promise).rejects.toEqual(
+      new AppError('Telefone já cadastrado'),
+    );
+  });
+
   it('should throw if score is invalid', async () => {
     const playerWithInvalidScore = { ...dto.player, score: 0 };
     const invalidDto = { ...dto, player: playerWithInvalidScore };
