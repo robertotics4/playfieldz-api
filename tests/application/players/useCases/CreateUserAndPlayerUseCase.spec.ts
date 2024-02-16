@@ -24,6 +24,7 @@ describe('CreateUserAndPlayerUseCase', () => {
       user: {
         phone: '5598985485698',
         password: 'any_password',
+        roles: [],
       },
       player: {
         name: 'John Doe',
