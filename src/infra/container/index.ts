@@ -7,15 +7,12 @@ import {
 } from '@/domain';
 import { CreateUserAndPlayerUseCase, ListPlayersUseCase } from '@/application';
 import { PrismaClient } from '@prisma/client';
-import { UserRepositoryInMemory } from '../repositories';
 import { PlayerRepository } from '../repositories/database';
+import { UserRepository } from '../repositories/database/prisma/UserRepository';
 
 container.registerInstance('PrismaClient', new PrismaClient());
 
-container.registerSingleton<IUserRepository>(
-  'UserRepository',
-  UserRepositoryInMemory,
-);
+container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IPlayerRepository>(
   'PlayerRepository',

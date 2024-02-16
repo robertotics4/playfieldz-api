@@ -14,7 +14,7 @@ abstract class UserProps {
     public id: string,
     public phone: string,
     public password: string,
-    public roles?: UserRole[],
+    public roles: UserRole[],
   ) {}
 }
 

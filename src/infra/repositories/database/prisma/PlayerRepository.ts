@@ -7,7 +7,7 @@ export class PlayerRepository implements IPlayerRepository {
   constructor(@inject('PrismaClient') private prismaClient: PrismaClient) {}
 
   async create(data: Omit<Player, 'id'>): Promise<Player> {
-    const createdPlayer = await this.prismaClient.player.create({
+    const created = await this.prismaClient.player.create({
       data: {
         age: data.age,
         name: data.name,
@@ -20,8 +20,8 @@ export class PlayerRepository implements IPlayerRepository {
     });
 
     return new Player({
-      ...createdPlayer,
-      position: createdPlayer.position as PlayerPosition,
+      ...created,
+      position: created.position as PlayerPosition,
     });
   }
 

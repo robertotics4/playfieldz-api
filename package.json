@@ -16,6 +16,9 @@
     "commit": "cz",
     "start": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main/interfaces/rest"
   },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
     "@commitlint/config-conventional": "^18.1.0",
