@@ -38,7 +38,6 @@ export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
     }
 
     const user = await this.userRepository.create(dto.user);
-    console.log(user);
 
     const player = await this.playerRepository.create({
       ...dto.player,
