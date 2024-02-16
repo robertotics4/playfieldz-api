@@ -1,14 +1,19 @@
 import { container } from 'tsyringe';
 import {
   ICreateUserAndPlayerUseCase,
+  IGroupRepository,
   IListPlayersUseCase,
   IPlayerRepository,
   IUserRepository,
 } from '@/domain';
-import { CreateUserAndPlayerUseCase, ListPlayersUseCase } from '@/application';
+import {
+  CreateGroupUseCase,
+  CreateUserAndPlayerUseCase,
+  ListPlayersUseCase,
+} from '@/application';
 import { PrismaClient } from '@prisma/client';
-import { PlayerRepository } from '../repositories/database';
-import { UserRepository } from '../repositories/database/prisma/UserRepository';
+import { GroupRepository, PlayerRepository, UserRepository } from '@/infra';
+import { ICreateGroupUseCase } from '@/domain/interfaces/useCases/groups/ICreateGroupUseCase';
 
 container.registerInstance('PrismaClient', new PrismaClient());
 
@@ -19,6 +24,12 @@ container.registerSingleton<IPlayerRepository>(
   PlayerRepository,
 );
 
+container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
+container.registerSingleton<IGroupRepository>(
+  'GroupRepository',
+  GroupRepository,
+);
+
 container.registerSingleton<ICreateUserAndPlayerUseCase>(
   'CreateUserAndPlayerUseCase',
   CreateUserAndPlayerUseCase,
@@ -27,4 +38,9 @@ container.registerSingleton<ICreateUserAndPlayerUseCase>(
 container.registerSingleton<IListPlayersUseCase>(
   'ListPlayersUseCase',
   ListPlayersUseCase,
+);
+
+container.registerSingleton<ICreateGroupUseCase>(
+  'CreateGroupUseCase',
+  CreateGroupUseCase,
 );

@@ -1,4 +1,5 @@
 import { Group, PrismaClient } from '@prisma/client';
+import { ObjectId } from 'mongodb';
 
 const prisma = new PrismaClient();
 
@@ -11,6 +12,7 @@ async function cleanAll() {
 }
 
 async function createRootGroup(): Promise<Group> {
+  const mongoId = new ObjectId();
   let existentGroup = await prisma.group.findFirst({
     where: { name: rootHashMd5 },
   });
@@ -19,6 +21,7 @@ async function createRootGroup(): Promise<Group> {
     existentGroup = await prisma.group.create({
       data: {
         name: rootHashMd5,
+        createdBy: mongoId.toString(),
       },
     });
   }

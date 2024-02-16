@@ -4,6 +4,7 @@ describe('Group', () => {
   const groupData: Group = {
     id: 'any_id',
     name: 'any_group_name',
+    createdBy: 'any_user_id',
     description: 'any_group_description',
     imageUrl: 'any_image_url',
   };
