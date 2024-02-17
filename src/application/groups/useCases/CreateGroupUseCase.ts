@@ -4,6 +4,7 @@ import {
   Group,
   IGroupRepository,
   IUserRepository,
+  User,
   UserPermission,
 } from '@/domain';
 import { ICreateGroupUseCase } from '@/domain/interfaces/useCases/groups/ICreateGroupUseCase';
@@ -34,12 +35,14 @@ export class CreateGroupUseCase implements ICreateGroupUseCase {
       throw new AppError('Falha na criação do grupo');
     }
 
-    await this.userRepository.update(user.id, {
+    const updatedUser = await this.userRepository.update(user.id, {
       roles: [
         ...user.roles,
         { groupId: createdGroup.id, permission: UserPermission.ADMIN },
       ],
     });
+
+    createdGroup.creator = updatedUser as User;
 
     return createdGroup;
   }
