@@ -1,3 +1,5 @@
+import { User } from './User';
+
 abstract class GroupProps {
   constructor(
     public id: string,
@@ -18,4 +20,6 @@ export class Group extends GroupProps {
       group.imageUrl,
     );
   }
+
+  creator?: User;
 }
