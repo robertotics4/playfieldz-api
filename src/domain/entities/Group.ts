@@ -21,5 +21,5 @@ export class Group extends GroupProps {
     );
   }
 
-  creator?: User;
+  creator?: Omit<User, 'password'>;
 }

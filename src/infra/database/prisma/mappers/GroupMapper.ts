@@ -26,7 +26,12 @@ export class GroupMapper implements IMapper<GroupModel, Group> {
       imageUrl: databaseModel.description || undefined,
     };
 
-    group.creator = this.userMapper.convert(databaseModel.creator);
+    const userWithoutPassword = {
+      ...this.userMapper.convert(databaseModel.creator),
+      password: undefined,
+    };
+
+    group.creator = userWithoutPassword;
     return group;
   }
 }

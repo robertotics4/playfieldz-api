@@ -1,11 +1,13 @@
 
 # Módulo de jogadores
 [x] Deve ser possível cadastrar jogadores
-[ ] No cadastro não deve ser retornada a senha
+[x] No cadastro não deve ser retornada a senha
 [x] O score dos jogadores deve ser entre 1 e 5
 [x] Deve ser possível listar jogadores
 [ ] Deve ser possível alterar os dados de jogadores
 [ ] Deve ser possível remover jogadores
+[ ] Deve ser possível exportar um JSON com as informações de um grupo, incluindo as dos jogadores
+[ ] Deve ser possível importar um arquivo JSON com as informações do grupo, incluindo as dos jogadores
 
 # Módulo de contas de usuários
 [ ] Deve existir um usuário administrador do sistema com todas as permissões

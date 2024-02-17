@@ -42,7 +42,10 @@ export class CreateGroupUseCase implements ICreateGroupUseCase {
       ],
     });
 
-    createdGroup.creator = updatedUser as User;
+    createdGroup.creator = { ...updatedUser, password: undefined } as Omit<
+      User,
+      'password'
+    >;
 
     return createdGroup;
   }
