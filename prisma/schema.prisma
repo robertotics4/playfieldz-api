@@ -14,7 +14,7 @@ model Player {
   age         Int
   position    String
   score       Int
-  user        User?         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId      String        @unique @db.ObjectId
   groupsId    String[]
   createdAt   DateTime      @default(now())

@@ -1,3 +1,5 @@
+import { User } from './User';
+
 export enum PlayerPosition {
   GK = 'Goleiro',
   CB = 'Zagueiro',
@@ -16,7 +18,6 @@ abstract class PlayerProps {
     public position: PlayerPosition,
     public score: number,
     public userId: string,
-    public groupsId: string[],
   ) {}
 }
 
@@ -30,7 +31,8 @@ export class Player extends PlayerProps {
       player.position,
       player.score,
       player.userId,
-      player.groupsId,
     );
   }
+
+  user?: Omit<User, 'password'>;
 }

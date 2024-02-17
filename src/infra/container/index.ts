@@ -7,17 +7,26 @@ import {
   IMapper,
   IPlayerRepository,
   IUserRepository,
+  Player,
+  User,
 } from '@/domain';
 import {
   CreateGroupUseCase,
   CreateUserAndPlayerUseCase,
   ListPlayersUseCase,
 } from '@/application';
-import { Group as GroupModel, PrismaClient } from '@prisma/client';
+import {
+  Group as GroupModel,
+  Player as PlayerModel,
+  User as UserModel,
+  PrismaClient,
+} from '@prisma/client';
 import {
   GroupMapper,
   GroupRepository,
+  PlayerMapper,
   PlayerRepository,
+  UserMapper,
   UserRepository,
 } from '@/infra';
 import { ICreateGroupUseCase } from '@/domain/interfaces/useCases/groups/ICreateGroupUseCase';
@@ -56,3 +65,10 @@ container.registerSingleton<IMapper<GroupModel, Group>>(
   'GroupMapper',
   GroupMapper,
 );
+
+container.registerSingleton<IMapper<PlayerModel, Player>>(
+  'PlayerMapper',
+  PlayerMapper,
+);
+
+container.registerSingleton<IMapper<UserModel, User>>('UserMapper', UserMapper);

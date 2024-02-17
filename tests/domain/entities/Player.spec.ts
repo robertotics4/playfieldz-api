@@ -8,7 +8,6 @@ describe('Player', () => {
     age: 25,
     position: PlayerPosition.FW,
     score: 90,
-    groupsId: ['group1', 'group2'],
     userId: 'any_user_id',
   };
 
@@ -26,6 +25,5 @@ describe('Player', () => {
     expect(player.age).toEqual(playerData.age);
     expect(player.position).toEqual(playerData.position);
     expect(player.score).toEqual(playerData.score);
-    expect(player.groupsId).toEqual(playerData.groupsId);
   });
 });

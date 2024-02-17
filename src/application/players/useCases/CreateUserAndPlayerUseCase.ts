@@ -1,10 +1,12 @@
 import { inject, injectable } from 'tsyringe';
-import { AppError, CreateUserAndPlayerDTO, IPlayerRepository } from '@/domain';
-import { IUserRepository } from '@/domain/interfaces/repositories/IUserRepository';
 import {
-  CreateUserAndPlayer,
-  ICreateUserAndPlayerUseCase,
-} from '@/domain/interfaces/useCases/players/ICreateUserAndPlayerUseCase';
+  AppError,
+  CreateUserAndPlayerDTO,
+  IPlayerRepository,
+  Player,
+} from '@/domain';
+import { IUserRepository } from '@/domain/interfaces/repositories/IUserRepository';
+import { ICreateUserAndPlayerUseCase } from '@/domain/interfaces/useCases/players/ICreateUserAndPlayerUseCase';
 
 @injectable()
 export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
@@ -17,9 +19,7 @@ export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
     @inject('PlayerRepository') private playerRepository: IPlayerRepository,
   ) {}
 
-  async execute(
-    dto: CreateUserAndPlayerDTO,
-  ): Promise<CreateUserAndPlayer.Output> {
+  async execute(dto: CreateUserAndPlayerDTO): Promise<Player> {
     const existentUser = await this.userRepository.findOne({
       phone: dto.user.phone,
     });
@@ -44,6 +44,6 @@ export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
       userId: user.id,
     });
 
-    return { user, player };
+    return player;
   }
 }

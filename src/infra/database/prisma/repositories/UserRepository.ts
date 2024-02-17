@@ -1,23 +1,20 @@
-import { IUserRepository, User, UserPermission } from '@/domain';
-import { Prisma, PrismaClient } from '@prisma/client';
+import { IMapper, IUserRepository, User } from '@/domain';
+import { PrismaClient, User as UserModel } from '@prisma/client';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class UserRepository implements IUserRepository {
-  constructor(@inject('PrismaClient') private prismaClient: PrismaClient) {}
+  constructor(
+    @inject('PrismaClient') private prismaClient: PrismaClient,
+    @inject('UserMapper') private userMapper: IMapper<UserModel, User>,
+  ) {}
 
   async create(data: Omit<User, 'id'>): Promise<User> {
     const created = await this.prismaClient.user.create({
       data,
     });
 
-    return new User({
-      ...created,
-      roles: created.roles.map(r => ({
-        groupId: r.groupId,
-        permission: r.permission as UserPermission,
-      })),
-    });
+    return this.userMapper.convert(created);
   }
 
   async findOne(filters: Partial<User>): Promise<User | null> {
@@ -29,25 +26,13 @@ export class UserRepository implements IUserRepository {
       return null;
     }
 
-    return new User({
-      ...user,
-      roles: user.roles.map(r => ({
-        groupId: r.groupId,
-        permission: r.permission as UserPermission,
-      })),
-    });
+    return this.userMapper.convert(user);
   }
 
   async list(): Promise<User[]> {
     const users = await this.prismaClient.user.findMany({});
 
-    return users.map(user => ({
-      ...user,
-      roles: user.roles.map(r => ({
-        groupId: r.groupId,
-        permission: r.permission as UserPermission,
-      })),
-    }));
+    return users.map(user => this.userMapper.convert(user));
   }
 
   async update(id: string, data: Partial<User>): Promise<User | null> {
@@ -56,13 +41,7 @@ export class UserRepository implements IUserRepository {
       data,
     });
 
-    return new User({
-      ...updated,
-      roles: updated.roles.map(r => ({
-        groupId: r.groupId,
-        permission: r.permission as UserPermission,
-      })),
-    });
+    return this.userMapper.convert(updated);
   }
 
   async delete(id: string): Promise<boolean> {

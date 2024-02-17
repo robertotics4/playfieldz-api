@@ -1,6 +1,7 @@
 
 # Módulo de jogadores
 [x] Deve ser possível cadastrar jogadores
+[ ] No cadastro não deve ser retornada a senha
 [x] O score dos jogadores deve ser entre 1 e 5
 [x] Deve ser possível listar jogadores
 [ ] Deve ser possível alterar os dados de jogadores

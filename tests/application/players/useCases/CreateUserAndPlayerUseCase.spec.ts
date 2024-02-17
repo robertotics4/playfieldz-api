@@ -46,6 +46,11 @@ describe('CreateUserAndPlayerUseCase', () => {
     playerRepositoryStub.create.mockResolvedValue({
       ...dto.player,
       id: 'any_player_id',
+      user: {
+        id: 'any_user_id',
+        phone: '5598985485698',
+        roles: [],
+      },
     });
   });
 
@@ -106,8 +111,7 @@ describe('CreateUserAndPlayerUseCase', () => {
   it('should register', async () => {
     const result = await sut.execute(dto);
 
-    expect(result.user).toHaveProperty('id');
-    expect(result.player).toHaveProperty('id');
+    expect(result).toHaveProperty('id');
     expect(result.user).not.toHaveProperty('password');
     expect(result).toBeTruthy();
   });

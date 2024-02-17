@@ -1,9 +1,13 @@
-import { Group, IMapper, UserPermission } from '@/domain';
-import { Group as GroupModel, User } from '@prisma/client';
-import { injectable } from 'tsyringe';
+import { Group, IMapper, User } from '@/domain';
+import { Group as GroupModel, User as UserModel } from '@prisma/client';
+import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class GroupMapper implements IMapper<GroupModel, Group> {
+  constructor(
+    @inject('UserMapper') private userMapper: IMapper<UserModel, User>,
+  ) {}
+
   convert(databaseModel: {
     id: string;
     name: string;
@@ -12,7 +16,7 @@ export class GroupMapper implements IMapper<GroupModel, Group> {
     createdBy: string;
     createdAt: Date;
     updatedAt: Date;
-    creator: User;
+    creator: UserModel;
   }): Group {
     const { creator, ...groupData } = databaseModel;
 
@@ -22,14 +26,7 @@ export class GroupMapper implements IMapper<GroupModel, Group> {
       imageUrl: databaseModel.description || undefined,
     };
 
-    group.creator = {
-      ...databaseModel.creator,
-      roles: databaseModel.creator.roles.map(r => ({
-        groupId: r.groupId,
-        permission: r.permission as UserPermission,
-      })),
-    };
-
+    group.creator = this.userMapper.convert(databaseModel.creator);
     return group;
   }
 }
