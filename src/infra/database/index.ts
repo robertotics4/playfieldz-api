@@ -1,2 +1,2 @@
+export * from './prisma';
 export * from './inMemory';
-export * from './database';
