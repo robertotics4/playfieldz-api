@@ -18,7 +18,7 @@
 # Módulo de grupos
 [x] Deve ser possível criar grupos
 [x] O usuário que criou o grupo deve se tornar administrador nele
-[ ] Deve ser possível adicionar jogadores ao grupo
+[x] Deve ser possível adicionar jogadores ao grupo
 [ ] Ao adicionar um jogador ele deve ter as permissões de Jogador
 [ ] Somente administradores podem adicionar jogadores ao grupo
 [ ] Deve ser possível tornar jogadores administradores do grupo
