@@ -27,4 +27,16 @@ export class GroupRepository implements IGroupRepository {
 
     return groups.map(g => this.groupMapper.convert(g));
   }
+
+  async findOne(filters: Partial<Group>): Promise<Group | null> {
+    const group = await this.prismaClient.group.findFirst({
+      where: filters,
+    });
+
+    if (group === null) {
+      return null;
+    }
+
+    return this.groupMapper.convert(group);
+  }
 }
