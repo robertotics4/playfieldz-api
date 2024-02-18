@@ -12,7 +12,6 @@ export type CreateUserAndPlayerDTO = {
     age: number;
     position: PlayerPosition;
     score: number;
-    groupsId: string[];
     userId: string;
   };
 };

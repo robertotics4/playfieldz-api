@@ -1,15 +1,5 @@
-export namespace AddPlayerToGroup {
-  export type Input = {
-    userId: string;
-    playerId: string;
-    groupId: string;
-  };
-}
+import { AddPlayerToGroupDTO } from '@/domain/dtos';
 
 export interface IAddPlayerToGroupUseCase {
-  execute({
-    userId,
-    playerId,
-    groupId,
-  }: AddPlayerToGroup.Input): Promise<boolean>;
+  execute({ userId, playerId, groupId }: AddPlayerToGroupDTO): Promise<boolean>;
 }

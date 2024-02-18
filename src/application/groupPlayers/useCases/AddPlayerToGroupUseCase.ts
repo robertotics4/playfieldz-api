@@ -1,6 +1,6 @@
 import { inject, injectable } from 'tsyringe';
 import {
-  AddPlayerToGroup,
+  AddPlayerToGroupDTO,
   AppError,
   Group,
   IAddPlayerToGroupUseCase,
@@ -24,7 +24,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     userId,
     playerId,
     groupId,
-  }: AddPlayerToGroup.Input): Promise<boolean> {
+  }: AddPlayerToGroupDTO): Promise<boolean> {
     const group = await this.groupRepository.findOne({ id: groupId });
 
     if (!group) {

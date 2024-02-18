@@ -30,7 +30,6 @@ describe('CreateUserAndPlayerUseCase', () => {
         name: 'John Doe',
         nickname: 'John',
         age: 33,
-        groupsId: [],
         position: PlayerPosition.CB,
         score: 3,
         userId: 'any_user_id',

@@ -31,6 +31,7 @@ export class GroupRepository implements IGroupRepository {
   async findOne(filters: Partial<Group>): Promise<Group | null> {
     const group = await this.prismaClient.group.findFirst({
       where: filters,
+      include: { creator: true },
     });
 
     if (group === null) {
