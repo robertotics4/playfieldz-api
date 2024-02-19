@@ -13,6 +13,7 @@ import {
   IMatchRepository,
   IPlayerRepository,
   IUserRepository,
+  IVerifyUserPermissionUseCase,
   Match,
   Player,
   User,
@@ -23,6 +24,7 @@ import {
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
   ListPlayersUseCase,
+  VerifyUserPermissionUseCase,
 } from '@/application';
 import {
   Group as GroupModel,
@@ -120,4 +122,9 @@ container.registerSingleton<IAddPlayerToGroupUseCase>(
 container.registerSingleton<ICreateMatchUseCase>(
   'CreateMatchUseCase',
   CreateMatchUseCase,
+);
+
+container.registerSingleton<IVerifyUserPermissionUseCase>(
+  'VerifyUserPermissionUseCase',
+  VerifyUserPermissionUseCase,
 );

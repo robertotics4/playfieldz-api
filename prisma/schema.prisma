@@ -14,7 +14,7 @@ model Player {
   age                         Int
   position                    String
   score                       Int
-  user                        User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user                        User              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId                      String            @unique @db.ObjectId
   groups                      GroupPlayer[]
   createdAt                   DateTime          @default(now())
@@ -52,9 +52,9 @@ model Group {
 
 model GroupPlayer {
   id                          String            @id @default(auto()) @map("_id") @db.ObjectId
-  group                       Group             @relation(fields: [groupId], references: [id], onDelete: Cascade)
+  group                       Group             @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   groupId                     String            @db.ObjectId
-  player                      Player            @relation(fields: [playerId], references: [id], onDelete: Cascade)
+  player                      Player            @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   playerId                    String            @db.ObjectId
   paymentRecurrence           String
   matches                     MatchPlayer[]
@@ -76,7 +76,7 @@ model Match {
   maxPlayerLimit               Int
   playersPerTeam               Int
   groupId                      String           @db.ObjectId
-  group                        Group            @relation(fields: [groupId], references: [id])
+  group                        Group            @relation(fields: [groupId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   players                      MatchPlayer[]
   createdAt                    DateTime         @default(now())
   updatedAt                    DateTime         @updatedAt
