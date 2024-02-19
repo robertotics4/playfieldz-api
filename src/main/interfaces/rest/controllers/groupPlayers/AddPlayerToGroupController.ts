@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 export class AddPlayerToGroupController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id: groupId } = request.params;
-    const { userId, playerId } = request.body;
+    const { userId, playerId, paymentRecurrence } = request.body;
 
     const addPlayerToGroupUseCase = container.resolve(AddPlayerToGroupUseCase);
 
@@ -13,6 +13,7 @@ export class AddPlayerToGroupController {
       groupId,
       userId,
       playerId,
+      paymentRecurrence,
     });
 
     return response.status(204).send();
