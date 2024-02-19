@@ -8,6 +8,7 @@
 [ ] Deve ser possível remover jogadores
 [ ] Deve ser possível exportar um JSON com as informações de um grupo, incluindo as dos jogadores
 [ ] Deve ser possível importar um arquivo JSON com as informações do grupo, incluindo as dos jogadores
+[ ] Deve ser informado o tipo de pagamento do jogador ao adiciona-lo no grupo
 
 # Módulo de contas de usuários
 [ ] Deve existir um usuário administrador do sistema com todas as permissões
@@ -33,3 +34,7 @@
 
 # Módulo de árbitros
 [ ] Deve ser possível cadastrar árbitros
+
+# Módulo de finanças
+[ ] Deve ser possível receber pagamentos dos jogadores (diaristas ou mensalistas)
+[ ] Só administradores do grupo podem receber pagamentos
