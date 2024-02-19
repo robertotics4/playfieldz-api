@@ -29,3 +29,7 @@
 [ ] Somente administradores podem criar partidas
 [ ] Deve ser possível listar partidas
 [ ] Deve ser possível um jogador confirmar ou não a própria presença na partida
+[ ] Deve ser possível vincular um árbitro à partida
+
+# Módulo de árbitros
+[ ] Deve ser possível cadastrar árbitros
