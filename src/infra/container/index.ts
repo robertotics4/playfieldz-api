@@ -2,18 +2,25 @@ import { container } from 'tsyringe';
 import {
   Group,
   GroupPlayer,
+  IAddPlayerToGroupUseCase,
+  ICreateGroupUseCase,
+  ICreateMatchUseCase,
   ICreateUserAndPlayerUseCase,
   IGroupPlayerRepository,
   IGroupRepository,
   IListPlayersUseCase,
   IMapper,
+  IMatchRepository,
   IPlayerRepository,
   IUserRepository,
+  Match,
   Player,
   User,
 } from '@/domain';
 import {
+  AddPlayerToGroupUseCase,
   CreateGroupUseCase,
+  CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
   ListPlayersUseCase,
 } from '@/application';
@@ -22,6 +29,7 @@ import {
   Player as PlayerModel,
   User as UserModel,
   GroupPlayer as GroupPlayerModel,
+  Match as MatchModel,
   PrismaClient,
 } from '@prisma/client';
 import {
@@ -29,12 +37,13 @@ import {
   GroupPlayerMapper,
   GroupPlayerRepository,
   GroupRepository,
+  MatchMapper,
+  MatchRepository,
   PlayerMapper,
   PlayerRepository,
   UserMapper,
   UserRepository,
 } from '@/infra';
-import { ICreateGroupUseCase } from '@/domain/interfaces/useCases/groups/ICreateGroupUseCase';
 
 // Database Client
 container.registerInstance('PrismaClient', new PrismaClient());
@@ -59,6 +68,11 @@ container.registerSingleton<IGroupPlayerRepository>(
   GroupPlayerRepository,
 );
 
+container.registerSingleton<IMatchRepository>(
+  'MatchRepository',
+  MatchRepository,
+);
+
 // Mappers
 container.registerSingleton<IMapper<GroupModel, Group>>(
   'GroupMapper',
@@ -77,8 +91,12 @@ container.registerSingleton<IMapper<GroupPlayerModel, GroupPlayer>>(
   GroupPlayerMapper,
 );
 
-// Use cases
+container.registerSingleton<IMapper<MatchModel, Match>>(
+  'MatchMapper',
+  MatchMapper,
+);
 
+// Use cases
 container.registerSingleton<ICreateUserAndPlayerUseCase>(
   'CreateUserAndPlayerUseCase',
   CreateUserAndPlayerUseCase,
@@ -92,4 +110,14 @@ container.registerSingleton<IListPlayersUseCase>(
 container.registerSingleton<ICreateGroupUseCase>(
   'CreateGroupUseCase',
   CreateGroupUseCase,
+);
+
+container.registerSingleton<IAddPlayerToGroupUseCase>(
+  'AddPlayerToGroupUseCase',
+  AddPlayerToGroupUseCase,
+);
+
+container.registerSingleton<ICreateMatchUseCase>(
+  'CreateMatchUseCase',
+  CreateMatchUseCase,
 );

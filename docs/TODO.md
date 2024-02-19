@@ -8,7 +8,7 @@
 [ ] Deve ser possível remover jogadores
 [ ] Deve ser possível exportar um JSON com as informações de um grupo, incluindo as dos jogadores
 [ ] Deve ser possível importar um arquivo JSON com as informações do grupo, incluindo as dos jogadores
-[ ] Deve ser informado o tipo de pagamento do jogador ao adiciona-lo no grupo
+[x] Deve ser informado o tipo de pagamento do jogador ao adiciona-lo no grupo
 
 # Módulo de contas de usuários
 [ ] Deve existir um usuário administrador do sistema com todas as permissões
@@ -31,6 +31,8 @@
 [ ] Deve ser possível listar partidas
 [ ] Deve ser possível um jogador confirmar ou não a própria presença na partida
 [ ] Deve ser possível vincular um árbitro à partida
+[ ] Deve ser possível sortear os times da partida
+[ ] O sorteio deve ser baseado na seguinte ordem hierárquica: paymentRecurrence -> score -> age
 
 # Módulo de árbitros
 [ ] Deve ser possível cadastrar árbitros
