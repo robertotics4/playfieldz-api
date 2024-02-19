@@ -24,6 +24,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     userId,
     playerId,
     groupId,
+    paymentRecurrence,
   }: AddPlayerToGroupDTO): Promise<boolean> {
     const group = await this.groupRepository.findOne({ id: groupId });
 
@@ -46,6 +47,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     await this.groupPlayerRepository.create({
       groupId: group.id,
       playerId,
+      paymentRecurrence,
     });
 
     return true;
