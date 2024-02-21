@@ -3,6 +3,7 @@ import {
   AppError,
   CreateUserAndPlayerDTO,
   ICreateUserAndPlayerUseCase,
+  IEncryptor,
   IPlayerRepository,
   IUserRepository,
   PlayerPosition,
@@ -14,11 +15,13 @@ describe('CreateUserAndPlayerUseCase', () => {
   let sut: ICreateUserAndPlayerUseCase;
   let userRepositoryStub: MockProxy<IUserRepository>;
   let playerRepositoryStub: MockProxy<IPlayerRepository>;
+  let encryptorStub: MockProxy<IEncryptor>;
   let dto: CreateUserAndPlayerDTO;
 
   beforeAll(() => {
     userRepositoryStub = mock();
     playerRepositoryStub = mock();
+    encryptorStub = mock();
 
     dto = {
       user: {
@@ -51,12 +54,14 @@ describe('CreateUserAndPlayerUseCase', () => {
         roles: [],
       },
     });
+    encryptorStub.hash.mockResolvedValue('encrypted_password');
   });
 
   beforeEach(() => {
     sut = new CreateUserAndPlayerUseCase(
       userRepositoryStub,
       playerRepositoryStub,
+      encryptorStub,
     );
   });
 
@@ -80,7 +85,10 @@ describe('CreateUserAndPlayerUseCase', () => {
   it('should call userRepository.create with correct params', async () => {
     await sut.execute(dto);
 
-    expect(userRepositoryStub.create).toHaveBeenCalledWith(dto.user);
+    expect(userRepositoryStub.create).toHaveBeenCalledWith({
+      ...dto.user,
+      password: 'encrypted_password',
+    });
     expect(userRepositoryStub.create).toHaveBeenCalledTimes(1);
   });
 
@@ -101,6 +109,21 @@ describe('CreateUserAndPlayerUseCase', () => {
 
   it('should throw if playerRepository.create throws', async () => {
     playerRepositoryStub.create.mockRejectedValueOnce(new Error());
+
+    const promise = sut.execute(dto);
+
+    expect(promise).rejects.toThrow();
+  });
+
+  it('should call encryptor.hash with correct params', async () => {
+    await sut.execute(dto);
+
+    expect(encryptorStub.hash).toHaveBeenCalledWith(dto.user.password, 10);
+    expect(encryptorStub.hash).toHaveBeenCalledTimes(1);
+  });
+
+  it('should throw if encryptor.hash throws', async () => {
+    encryptorStub.hash.mockRejectedValueOnce(new Error());
 
     const promise = sut.execute(dto);
 

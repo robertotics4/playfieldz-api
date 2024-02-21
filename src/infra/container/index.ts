@@ -6,6 +6,7 @@ import {
   ICreateGroupUseCase,
   ICreateMatchUseCase,
   ICreateUserAndPlayerUseCase,
+  IEncryptor,
   IGroupPlayerRepository,
   IGroupRepository,
   IListPlayersUseCase,
@@ -35,6 +36,7 @@ import {
   PrismaClient,
 } from '@prisma/client';
 import {
+  BCryptEncryptor,
   GroupMapper,
   GroupPlayerMapper,
   GroupPlayerRepository,
@@ -50,7 +52,7 @@ import {
 // Database Client
 container.registerInstance('PrismaClient', new PrismaClient());
 
-// Repositories
+// Infrastructure
 container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
 
 container.registerSingleton<IPlayerRepository>(
@@ -74,6 +76,8 @@ container.registerSingleton<IMatchRepository>(
   'MatchRepository',
   MatchRepository,
 );
+
+container.registerSingleton<IEncryptor>('Encryptor', BCryptEncryptor);
 
 // Mappers
 container.registerSingleton<IMapper<GroupModel, Group>>(

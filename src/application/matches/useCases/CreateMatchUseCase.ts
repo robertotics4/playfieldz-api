@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe';
 import {
   AppError,
   CreateMatchDTO,
@@ -6,7 +7,6 @@ import {
   IVerifyUserPermissionUseCase,
   Match,
 } from '@/domain';
-import { inject, injectable } from 'tsyringe';
 
 @injectable()
 export class CreateMatchUseCase implements ICreateMatchUseCase {

@@ -26,8 +26,8 @@
 [ ] Somente administradores podem dar permissão de jogador para outros jogadores
 
 # Módulo de partidas
-[ ] Deve ser possível criar partidas nos grupos
-[ ] Somente administradores podem criar partidas
+[x] Deve ser possível criar partidas nos grupos
+[x] Somente administradores podem criar partidas
 [ ] Deve ser possível listar partidas
 [ ] Deve ser possível um jogador confirmar ou não a própria presença na partida
 [ ] Deve ser possível vincular um árbitro à partida

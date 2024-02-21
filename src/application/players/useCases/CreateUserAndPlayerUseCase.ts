@@ -2,6 +2,7 @@ import { inject, injectable } from 'tsyringe';
 import {
   AppError,
   CreateUserAndPlayerDTO,
+  IEncryptor,
   IPlayerRepository,
   Player,
 } from '@/domain';
@@ -14,9 +15,12 @@ export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
 
   private readonly PLAYER_SCORE_MAX = 5;
 
+  private readonly ENCRYPT_SALTS = 10;
+
   constructor(
     @inject('UserRepository') private userRepository: IUserRepository,
     @inject('PlayerRepository') private playerRepository: IPlayerRepository,
+    @inject('Encryptor') private encryptor: IEncryptor,
   ) {}
 
   async execute(dto: CreateUserAndPlayerDTO): Promise<Player> {
@@ -37,7 +41,15 @@ export class CreateUserAndPlayerUseCase implements ICreateUserAndPlayerUseCase {
       );
     }
 
-    const user = await this.userRepository.create(dto.user);
+    const encryptedPassword = await this.encryptor.hash(
+      dto.user.password,
+      this.ENCRYPT_SALTS,
+    );
+
+    const user = await this.userRepository.create({
+      ...dto.user,
+      password: encryptedPassword,
+    });
 
     const player = await this.playerRepository.create({
       ...dto.player,
