@@ -11,10 +11,11 @@
 [x] Deve ser informado o tipo de pagamento do jogador ao adiciona-lo no grupo
 
 # Módulo de contas de usuários
-[ ] Deve existir um usuário administrador do sistema com todas as permissões
+[x] Deve ser possível autenticar o usuário usando o telefone e a senha
+[x] Deve existir um usuário administrador do sistema com todas as permissões
 [x] Deve ser criada automaticamente uma conta no cadastro do jogador, utilizando o telefone como login e '12345678' como senha padrão
-[ ] Deve ser possível autenticar e receber um token JWT que será utilizado para autorização
-[ ] Deve ser possível criar usuários master
+[x] Deve ser possível autenticar e receber um token JWT que será utilizado para autorização
+[x] O Token do usuário deve expirar em 1 dia
 
 # Módulo de grupos
 [x] Deve ser possível criar grupos
