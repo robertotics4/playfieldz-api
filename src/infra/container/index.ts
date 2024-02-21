@@ -3,12 +3,14 @@ import {
   Group,
   GroupPlayer,
   IAddPlayerToGroupUseCase,
+  IAuthenticateUserUseCase,
   ICreateGroupUseCase,
   ICreateMatchUseCase,
   ICreateUserAndPlayerUseCase,
   IEncryptor,
   IGroupPlayerRepository,
   IGroupRepository,
+  IJsonWebToken,
   IListPlayersUseCase,
   IMapper,
   IMatchRepository,
@@ -21,6 +23,7 @@ import {
 } from '@/domain';
 import {
   AddPlayerToGroupUseCase,
+  AuthenticateUserUseCase,
   CreateGroupUseCase,
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
@@ -41,6 +44,7 @@ import {
   GroupPlayerMapper,
   GroupPlayerRepository,
   GroupRepository,
+  JsonWebToken,
   MatchMapper,
   MatchRepository,
   PlayerMapper,
@@ -78,6 +82,8 @@ container.registerSingleton<IMatchRepository>(
 );
 
 container.registerSingleton<IEncryptor>('Encryptor', BCryptEncryptor);
+
+container.registerSingleton<IJsonWebToken>('JsonWebToken', JsonWebToken);
 
 // Mappers
 container.registerSingleton<IMapper<GroupModel, Group>>(
@@ -131,4 +137,9 @@ container.registerSingleton<ICreateMatchUseCase>(
 container.registerSingleton<IVerifyUserPermissionUseCase>(
   'VerifyUserPermissionUseCase',
   VerifyUserPermissionUseCase,
+);
+
+container.registerSingleton<IAuthenticateUserUseCase>(
+  'AuthenticateUserUseCase',
+  AuthenticateUserUseCase,
 );
