@@ -8,13 +8,13 @@ import { ensureAuthenticated } from '../middlewares';
 
 const router = Router();
 
-router.use('/', authRouter);
+router.use('/auth', authRouter);
+router.use('/register', registerRouter);
 
 router.use(ensureAuthenticated);
 
 router.use('/players', playersRouter);
 router.use('/groups', groupRouter);
-router.use('/register', registerRouter);
 router.use('/matches', matchRouter);
 
 export { router };
