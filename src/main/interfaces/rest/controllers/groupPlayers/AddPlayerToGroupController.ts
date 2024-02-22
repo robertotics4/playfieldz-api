@@ -12,6 +12,7 @@ export class AddPlayerToGroupController {
 
     await addPlayerToGroupUseCase.execute({
       groupId,
+      userRoles: user.roles,
       userId: user.id,
       playerId,
       paymentRecurrence,

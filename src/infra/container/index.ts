@@ -4,6 +4,7 @@ import {
   GroupPlayer,
   IAddPlayerToGroupUseCase,
   IAuthenticateUserUseCase,
+  IConfirmPlayerPresenceUseCase,
   ICreateGroupUseCase,
   ICreateMatchUseCase,
   ICreateUserAndPlayerUseCase,
@@ -13,17 +14,20 @@ import {
   IJsonWebToken,
   IListPlayersUseCase,
   IMapper,
+  IMatchPlayerRepository,
   IMatchRepository,
   IPlayerRepository,
   IUserRepository,
   IVerifyUserPermissionUseCase,
   Match,
+  MatchPlayer,
   Player,
   User,
 } from '@/domain';
 import {
   AddPlayerToGroupUseCase,
   AuthenticateUserUseCase,
+  ConfirmPlayerPresenceUseCase,
   CreateGroupUseCase,
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
@@ -36,6 +40,7 @@ import {
   User as UserModel,
   GroupPlayer as GroupPlayerModel,
   Match as MatchModel,
+  MatchPlayer as MatchPlayerModel,
   PrismaClient,
 } from '@prisma/client';
 import {
@@ -46,6 +51,8 @@ import {
   GroupRepository,
   JsonWebToken,
   MatchMapper,
+  MatchPlayerMapper,
+  MatchPlayerRepository,
   MatchRepository,
   PlayerMapper,
   PlayerRepository,
@@ -81,6 +88,11 @@ container.registerSingleton<IMatchRepository>(
   MatchRepository,
 );
 
+container.registerSingleton<IMatchPlayerRepository>(
+  'MatchPlayerRepository',
+  MatchPlayerRepository,
+);
+
 container.registerSingleton<IEncryptor>('Encryptor', BCryptEncryptor);
 
 container.registerSingleton<IJsonWebToken>('JsonWebToken', JsonWebToken);
@@ -106,6 +118,11 @@ container.registerSingleton<IMapper<GroupPlayerModel, GroupPlayer>>(
 container.registerSingleton<IMapper<MatchModel, Match>>(
   'MatchMapper',
   MatchMapper,
+);
+
+container.registerSingleton<IMapper<MatchPlayerModel, MatchPlayer>>(
+  'MatchPlayerMapper',
+  MatchPlayerMapper,
 );
 
 // Use cases
@@ -142,4 +159,9 @@ container.registerSingleton<IVerifyUserPermissionUseCase>(
 container.registerSingleton<IAuthenticateUserUseCase>(
   'AuthenticateUserUseCase',
   AuthenticateUserUseCase,
+);
+
+container.registerSingleton<IConfirmPlayerPresenceUseCase>(
+  'ConfirmPlayerPresenceUseCase',
+  ConfirmPlayerPresenceUseCase,
 );

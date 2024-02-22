@@ -3,3 +3,4 @@ export * from './groups';
 export * from './groupPlayers';
 export * from './matches';
 export * from './users';
+export * from './matchPlayers';

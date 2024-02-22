@@ -34,7 +34,7 @@ export class GroupRepository implements IGroupRepository {
       include: { creator: true },
     });
 
-    if (group === null) {
+    if (!group) {
       return null;
     }
 

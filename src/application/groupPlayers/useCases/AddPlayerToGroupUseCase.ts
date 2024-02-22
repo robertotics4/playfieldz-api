@@ -4,7 +4,9 @@ import {
   AppError,
   IAddPlayerToGroupUseCase,
   IGroupPlayerRepository,
+  IUserRepository,
   IVerifyUserPermissionUseCase,
+  UserPermission,
 } from '@/domain';
 
 @injectable()
@@ -14,10 +16,12 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     private groupPlayerRepository: IGroupPlayerRepository,
     @inject('VerifyUserPermissionUseCase')
     private verifyUserPermissionUseCase: IVerifyUserPermissionUseCase,
+    @inject('UserRepository') private userRepository: IUserRepository,
   ) {}
 
   async execute({
     userId,
+    userRoles,
     playerId,
     groupId,
     paymentRecurrence,
@@ -35,6 +39,10 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
       groupId,
       playerId,
       paymentRecurrence,
+    });
+
+    await this.userRepository.update(userId, {
+      roles: [...userRoles, { groupId, permission: UserPermission.PLAYER }],
     });
 
     return true;

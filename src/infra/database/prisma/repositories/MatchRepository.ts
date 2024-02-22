@@ -19,4 +19,19 @@ export class MatchRepository implements IMatchRepository {
 
     return this.matchMapper.convert(created);
   }
+
+  async findOne(filters: Partial<Match>): Promise<Match | null> {
+    const { group, players, ...matchFilters } = filters;
+
+    const match = await this.prismaClient.match.findFirst({
+      where: matchFilters,
+      include: { group: true, players: true },
+    });
+
+    if (!match) {
+      return null;
+    }
+
+    return this.matchMapper.convert(match);
+  }
 }

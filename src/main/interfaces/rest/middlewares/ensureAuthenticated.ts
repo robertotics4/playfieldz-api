@@ -1,7 +1,7 @@
 import 'express-async-errors';
-import { NextFunction, Request, Response } from 'express';
-import { container } from 'tsyringe';
 import jwt from 'jsonwebtoken';
+import { container } from 'tsyringe';
+import { NextFunction, Request, Response } from 'express';
 import { AppError } from '@/domain';
 import { UserRepository } from '@/infra';
 
@@ -36,7 +36,7 @@ export async function ensureAuthenticated(
       throw new AppError('Usuário não encontrado', 401);
     }
 
-    request.user = { id: userId };
+    request.user = { id: userId, roles: [...user.roles] };
 
     next();
   } catch {
