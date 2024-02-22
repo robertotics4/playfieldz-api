@@ -48,6 +48,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
 
     return {
       user: {
+        id: user.id,
         phone: user.phone,
       },
       token,
