@@ -14,7 +14,6 @@ export class MatchRepository implements IMatchRepository {
 
     const created = await this.prismaClient.match.create({
       data: matchData,
-      include: { group: true, players: true },
     });
 
     return this.matchMapper.convert(created);

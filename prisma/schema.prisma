@@ -17,6 +17,7 @@ model Player {
   user                        User              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId                      String            @unique @db.ObjectId
   groups                      GroupPlayer[]
+  matches                     MatchPlayer[]
   createdAt                   DateTime          @default(now())
   updatedAt                   DateTime          @updatedAt
 }
@@ -57,7 +58,6 @@ model GroupPlayer {
   player                      Player            @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   playerId                    String            @db.ObjectId
   paymentRecurrence           String
-  matches                     MatchPlayer[]
   createdAt                   DateTime          @default(now())
   updatedAt                   DateTime          @updatedAt
 
@@ -84,8 +84,10 @@ model Match {
 
 model MatchPlayer {
   id                           String           @id @default(auto()) @map("_id") @db.ObjectId
-  player                       GroupPlayer      @relation(fields: [playerId], references: [id])
+  player                       Player           @relation(fields: [playerId], references: [id])
   playerId                     String           @db.ObjectId
   match                        Match            @relation(fields: [matchId], references: [id])
   matchId                      String           @db.ObjectId
+
+  @@unique([matchId, playerId])
 }

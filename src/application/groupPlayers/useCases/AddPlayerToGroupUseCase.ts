@@ -37,7 +37,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
         adminId,
         groupId,
         userId: player.userId,
-        roles: [{ groupId, permission: UserPermission.ADMIN }],
+        roles: [{ groupId, permission: UserPermission.PLAYER }],
       },
     );
 

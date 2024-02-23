@@ -1,7 +1,7 @@
 import { Location } from '@/domain/entities';
 
 export type CreateMatchDTO = {
-  userId: string;
+  adminId: string;
   groupId: string;
   location?: Location;
   schedulling: Date;

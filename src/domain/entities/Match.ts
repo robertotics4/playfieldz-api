@@ -1,5 +1,6 @@
 import { Group } from './Group';
 import { GroupPlayer } from './GroupPlayer';
+import { MatchPlayer } from './MatchPlayer';
 
 export type Location = {
   latitude: string;
@@ -31,5 +32,5 @@ export class Match extends MatchProps {
 
   group?: Group;
 
-  players?: GroupPlayer[];
+  players?: MatchPlayer[];
 }

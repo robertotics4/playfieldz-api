@@ -18,18 +18,18 @@ export class CreateMatchUseCase implements ICreateMatchUseCase {
 
   async execute({
     groupId,
-    userId,
+    adminId,
     location,
     maxPlayerLimit,
     playersPerTeam,
     schedulling,
   }: CreateMatchDTO): Promise<Match> {
-    const userHasPermission = await this.verifyUserPermissionUseCase.execute({
+    const isAdmin = await this.verifyUserPermissionUseCase.execute({
       groupId,
-      userId,
+      userId: adminId,
     });
 
-    if (!userHasPermission) {
+    if (!isAdmin) {
       throw new AppError('Usuário sem permissão para esta operação');
     }
 

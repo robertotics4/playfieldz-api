@@ -32,6 +32,7 @@ export class GroupMapper implements IMapper<GroupModel, Group> {
     };
 
     group.creator = userWithoutPassword;
+
     return group;
   }
 }

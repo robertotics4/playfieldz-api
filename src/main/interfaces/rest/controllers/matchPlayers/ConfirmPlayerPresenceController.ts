@@ -6,7 +6,6 @@ export class ConfirmPlayerPresenceController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { user } = request;
-    const { playerId } = request.body;
 
     const confirmPlayerPresenceUseCase = container.resolve(
       ConfirmPlayerPresenceUseCase,
@@ -14,8 +13,7 @@ export class ConfirmPlayerPresenceController {
 
     await confirmPlayerPresenceUseCase.execute({
       matchId: id,
-      playerId,
-      userRoles: user.roles,
+      userId: user.id,
     });
 
     return response.status(204).send();

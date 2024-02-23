@@ -9,7 +9,7 @@ export class CreateMatchController {
 
     const result = await createMatchUseCase.execute({
       ...request.body,
-      userId: user.id,
+      adminId: user.id,
     });
 
     return response.status(201).json(result);

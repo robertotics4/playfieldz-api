@@ -1,7 +1,4 @@
-import { UserRole } from '@/domain/entities';
-
 export type ConfirmPlayerPresenceDTO = {
-  userRoles: UserRole[];
-  playerId: string;
+  userId: string;
   matchId: string;
 };
