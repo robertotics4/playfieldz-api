@@ -17,6 +17,7 @@ import {
   IMatchPlayerRepository,
   IMatchRepository,
   IPlayerRepository,
+  IUpdateUserPermissionsUseCase,
   IUserRepository,
   IVerifyUserPermissionUseCase,
   Match,
@@ -32,6 +33,7 @@ import {
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
   ListPlayersUseCase,
+  UpdateUserPermissionsUseCase,
   VerifyUserPermissionUseCase,
 } from '@/application';
 import {
@@ -164,4 +166,9 @@ container.registerSingleton<IAuthenticateUserUseCase>(
 container.registerSingleton<IConfirmPlayerPresenceUseCase>(
   'ConfirmPlayerPresenceUseCase',
   ConfirmPlayerPresenceUseCase,
+);
+
+container.registerSingleton<IUpdateUserPermissionsUseCase>(
+  'UpdateUserPermissionsUseCase',
+  UpdateUserPermissionsUseCase,
 );

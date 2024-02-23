@@ -31,6 +31,19 @@ export class PlayerRepository implements IPlayerRepository {
     return players.map(p => this.playerMapper.convert(p));
   }
 
+  async findOne(filters: Partial<Player>): Promise<Player | null> {
+    const player = await this.prismaClient.player.findFirst({
+      where: filters,
+      include: { user: true },
+    });
+
+    if (!player) {
+      return null;
+    }
+
+    return this.playerMapper.convert(player);
+  }
+
   async delete(id: string): Promise<boolean> {
     await this.prismaClient.player.delete({
       where: { id },

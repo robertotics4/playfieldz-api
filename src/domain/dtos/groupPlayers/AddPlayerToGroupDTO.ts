@@ -1,8 +1,7 @@
-import { PlayerPaymentRecurrence, UserRole } from '@/domain/entities';
+import { PlayerPaymentRecurrence } from '@/domain/entities';
 
 export type AddPlayerToGroupDTO = {
-  userId: string;
-  userRoles: UserRole[];
+  adminId: string;
   playerId: string;
   groupId: string;
   paymentRecurrence: PlayerPaymentRecurrence;

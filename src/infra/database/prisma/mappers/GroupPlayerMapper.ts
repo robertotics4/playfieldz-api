@@ -1,11 +1,13 @@
+import { injectable } from 'tsyringe';
 import { GroupPlayer, IMapper, PlayerPaymentRecurrence } from '@/domain';
 import { GroupPlayer as GroupPlayerModel } from '@prisma/client';
-import { injectable } from 'tsyringe';
 
 @injectable()
 export class GroupPlayerMapper
   implements IMapper<GroupPlayerModel, GroupPlayer>
 {
+  constructor() {}
+
   convert(databaseModel: {
     id: string;
     groupId: string;

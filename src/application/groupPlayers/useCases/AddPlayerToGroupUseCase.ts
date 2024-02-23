@@ -2,49 +2,63 @@ import { inject, injectable } from 'tsyringe';
 import {
   AddPlayerToGroupDTO,
   AppError,
+  GroupPlayer,
   IAddPlayerToGroupUseCase,
   IGroupPlayerRepository,
-  IUserRepository,
-  IVerifyUserPermissionUseCase,
+  IPlayerRepository,
+  IUpdateUserPermissionsUseCase,
   UserPermission,
 } from '@/domain';
 
 @injectable()
 export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
   constructor(
+    @inject('PlayerRepository') private playerRepository: IPlayerRepository,
+    @inject('UpdateUserPermissionsUseCase')
+    private updateUserPermissionsUseCase: IUpdateUserPermissionsUseCase,
     @inject('GroupPlayerRepository')
     private groupPlayerRepository: IGroupPlayerRepository,
-    @inject('VerifyUserPermissionUseCase')
-    private verifyUserPermissionUseCase: IVerifyUserPermissionUseCase,
-    @inject('UserRepository') private userRepository: IUserRepository,
   ) {}
 
   async execute({
-    userId,
-    userRoles,
-    playerId,
+    adminId,
     groupId,
     paymentRecurrence,
-  }: AddPlayerToGroupDTO): Promise<boolean> {
-    const userHasPermission = await this.verifyUserPermissionUseCase.execute({
-      groupId,
-      userId,
-    });
+    playerId,
+  }: AddPlayerToGroupDTO): Promise<GroupPlayer> {
+    const player = await this.playerRepository.findOne({ id: playerId });
 
-    if (!userHasPermission) {
-      throw new AppError('Usuário sem permissão para esta operação');
+    if (!player) {
+      throw new AppError('Jogador não encontrado');
     }
 
-    await this.groupPlayerRepository.create({
+    const userWithPermissions = await this.updateUserPermissionsUseCase.execute(
+      {
+        adminId,
+        groupId,
+        userId: player.userId,
+        roles: [{ groupId, permission: UserPermission.ADMIN }],
+      },
+    );
+
+    if (!userWithPermissions) {
+      throw new AppError(
+        'Não foi possível atribuir as permissões para o jogador',
+      );
+    }
+
+    const playerAlreadyExists = await this.groupPlayerRepository.findOne({
+      playerId,
+    });
+
+    if (playerAlreadyExists) {
+      throw new AppError('O jogador já está no grupo');
+    }
+
+    return await this.groupPlayerRepository.create({
       groupId,
       playerId,
       paymentRecurrence,
     });
-
-    await this.userRepository.update(userId, {
-      roles: [...userRoles, { groupId, permission: UserPermission.PLAYER }],
-    });
-
-    return true;
   }
 }

@@ -19,4 +19,16 @@ export class GroupPlayerRepository implements IGroupPlayerRepository {
 
     return this.groupPlayerMapper.convert(created);
   }
+
+  async findOne(filters: Partial<GroupPlayer>): Promise<GroupPlayer | null> {
+    const groupPlayer = await this.prismaClient.groupPlayer.findFirst({
+      where: filters,
+    });
+
+    if (groupPlayer === null) {
+      return null;
+    }
+
+    return this.groupPlayerMapper.convert(groupPlayer);
+  }
 }

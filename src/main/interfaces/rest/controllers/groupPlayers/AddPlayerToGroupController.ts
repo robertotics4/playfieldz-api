@@ -11,9 +11,8 @@ export class AddPlayerToGroupController {
     const addPlayerToGroupUseCase = container.resolve(AddPlayerToGroupUseCase);
 
     await addPlayerToGroupUseCase.execute({
+      adminId: user.id,
       groupId,
-      userRoles: user.roles,
-      userId: user.id,
       playerId,
       paymentRecurrence,
     });
