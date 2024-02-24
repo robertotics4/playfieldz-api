@@ -21,16 +21,17 @@
 [x] Deve ser possível criar grupos
 [x] O usuário que criou o grupo deve se tornar administrador nele
 [x] Deve ser possível adicionar jogadores ao grupo
-[ ] Ao adicionar um jogador ele deve ter as permissões de Jogador
-[ ] Somente administradores podem adicionar jogadores ao grupo
+[x] Ao adicionar um jogador ele deve ter as permissões de Jogador
+[x] Somente administradores podem adicionar jogadores ao grupo
 [ ] Deve ser possível tornar jogadores administradores do grupo
 [ ] Somente administradores podem dar permissão de jogador para outros jogadores
 
 # Módulo de partidas
 [x] Deve ser possível criar partidas nos grupos
 [x] Somente administradores podem criar partidas
-[ ] Deve ser possível listar partidas
-[ ] Deve ser possível um jogador confirmar ou não a própria presença na partida
+[x] Deve ser possível listar partidas
+[ ] Deve ser possível listar partidas de um determinado grupo
+[x] Deve ser possível um jogador confirmar ou não a própria presença na partida
 [ ] Deve ser possível vincular um árbitro à partida
 [ ] Deve ser possível sortear os times da partida
 [ ] O sorteio deve ser baseado na seguinte ordem hierárquica: paymentRecurrence -> score -> age
