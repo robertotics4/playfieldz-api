@@ -12,6 +12,7 @@ import {
   IGroupPlayerRepository,
   IGroupRepository,
   IJsonWebToken,
+  IListMatchesUseCase,
   IListPlayersUseCase,
   IMapper,
   IMatchPlayerRepository,
@@ -32,6 +33,7 @@ import {
   CreateGroupUseCase,
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
+  ListMatchesUseCase,
   ListPlayersUseCase,
   UpdateUserPermissionsUseCase,
   VerifyUserPermissionUseCase,
@@ -171,4 +173,9 @@ container.registerSingleton<IConfirmPlayerPresenceUseCase>(
 container.registerSingleton<IUpdateUserPermissionsUseCase>(
   'UpdateUserPermissionsUseCase',
   UpdateUserPermissionsUseCase,
+);
+
+container.registerSingleton<IListMatchesUseCase>(
+  'ListMatchesUseCase',
+  ListMatchesUseCase,
 );

@@ -19,4 +19,18 @@ export class MatchPlayerRepository implements IMatchPlayerRepository {
 
     return this.matchPlayerMapper.convert(created);
   }
+
+  async findOne(filters: Partial<MatchPlayer>): Promise<MatchPlayer | null> {
+    const { match, player, ...matchPlayerFilters } = filters;
+    const matchPlayer = await this.prismaClient.matchPlayer.findFirst({
+      where: matchPlayerFilters,
+      include: { match: true, player: true },
+    });
+
+    if (!matchPlayer) {
+      return null;
+    }
+
+    return this.matchPlayerMapper.convert(matchPlayer);
+  }
 }

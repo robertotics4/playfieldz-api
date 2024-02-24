@@ -53,7 +53,13 @@ export class ConfirmPlayerPresenceUseCase
       throw new AppError('Jogador não encontrado');
     }
 
-    // validar se o jogador já confirmou presença
+    const playerAlreadyExists = await this.matchPlayerRepository.findOne({
+      playerId: player.id,
+    });
+
+    if (playerAlreadyExists) {
+      throw new AppError('O jogador já confirmou presença');
+    }
 
     await this.matchPlayerRepository.create({
       matchId,

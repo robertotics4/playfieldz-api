@@ -14,9 +14,18 @@ export class MatchRepository implements IMatchRepository {
 
     const created = await this.prismaClient.match.create({
       data: matchData,
+      include: { group: true },
     });
 
     return this.matchMapper.convert(created);
+  }
+
+  async list(): Promise<Match[]> {
+    const matches = await this.prismaClient.match.findMany({
+      include: { group: true, players: true },
+    });
+
+    return matches.map(m => this.matchMapper.convert(m));
   }
 
   async findOne(filters: Partial<Match>): Promise<Match | null> {
