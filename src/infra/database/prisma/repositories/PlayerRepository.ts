@@ -16,6 +16,10 @@ export class PlayerRepository implements IPlayerRepository {
       data: {
         ...playerData,
         position: data.position.toString(),
+        attributes: data.attributes.map(att => ({
+          name: att.name.toString(),
+          value: att.value,
+        })),
       },
       include: { user: true },
     });

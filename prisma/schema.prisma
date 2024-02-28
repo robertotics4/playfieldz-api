@@ -7,17 +7,22 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+type PlayerAttribute {
+  name                        String
+  value                       Int
+}
+
 model Player {
   id                          String            @id @default(auto()) @map("_id") @db.ObjectId
   name                        String
   nickname                    String
   age                         Int
   position                    String
-  score                       Int
   user                        User              @relation(fields: [userId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   userId                      String            @unique @db.ObjectId
   groups                      GroupPlayer[]
   matches                     MatchPlayer[]
+  attributes                  PlayerAttribute[]
   createdAt                   DateTime          @default(now())
   updatedAt                   DateTime          @updatedAt
 }
@@ -44,7 +49,7 @@ model Group {
   description                 String?
   imageUrl                    String?
   createdBy                   String            @db.ObjectId
-  creator                     User              @relation(fields: [createdBy], references: [id])
+  creator                     User              @relation(fields: [createdBy], references: [id], onDelete: Cascade, onUpdate: Cascade)
   players                     GroupPlayer[]
   matches                     Match[]
   createdAt                   DateTime          @default(now())
@@ -84,9 +89,9 @@ model Match {
 
 model MatchPlayer {
   id                           String           @id @default(auto()) @map("_id") @db.ObjectId
-  player                       Player           @relation(fields: [playerId], references: [id])
+  player                       Player           @relation(fields: [playerId], references: [id], onDelete: Cascade, onUpdate: Cascade)
   playerId                     String           @db.ObjectId
-  match                        Match            @relation(fields: [matchId], references: [id])
+  match                        Match            @relation(fields: [matchId], references: [id],  onDelete: Cascade, onUpdate: Cascade)
   matchId                      String           @db.ObjectId
 
   @@unique([matchId, playerId])

@@ -1,5 +1,10 @@
 import { MockProxy, mock } from 'jest-mock-extended';
-import { IPlayerRepository, Player, PlayerPosition } from '@/domain';
+import {
+  AttributeName,
+  IPlayerRepository,
+  Player,
+  PlayerPosition,
+} from '@/domain';
 import { ListPlayersUseCase } from '@/application';
 import { IListPlayersUseCase } from '@/domain/interfaces/useCases/players/IListPlayersUseCase';
 
@@ -11,6 +16,29 @@ describe('ListPlayersUseCase', () => {
   beforeAll(() => {
     playerRepositoryStub = mock();
 
+    const defaultPlayerAttributes = [
+      {
+        name: AttributeName.DEFENSE,
+        value: 5,
+      },
+      {
+        name: AttributeName.ASSISTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.DRIBBLING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SHOOTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SKILLS,
+        value: 5,
+      },
+    ];
+
     players = [
       {
         id: 'any_id_1',
@@ -18,8 +46,8 @@ describe('ListPlayersUseCase', () => {
         nickname: 'playerOne',
         age: 33,
         position: PlayerPosition.CB,
-        score: 3,
         userId: 'any_user_id_1',
+        attributes: defaultPlayerAttributes,
       },
       {
         id: 'any_id_2',
@@ -27,8 +55,8 @@ describe('ListPlayersUseCase', () => {
         nickname: 'John',
         age: 30,
         position: PlayerPosition.FB,
-        score: 4,
         userId: 'any_user_id_2',
+        attributes: defaultPlayerAttributes,
       },
     ];
 

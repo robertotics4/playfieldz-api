@@ -1,4 +1,4 @@
-import { Player, PlayerPosition } from '@/domain';
+import { AttributeName, Player, PlayerPosition } from '@/domain';
 
 describe('Player', () => {
   const playerData: Player = {
@@ -7,8 +7,29 @@ describe('Player', () => {
     nickname: 'JD',
     age: 25,
     position: PlayerPosition.FW,
-    score: 90,
     userId: 'any_user_id',
+    attributes: [
+      {
+        name: AttributeName.DEFENSE,
+        value: 5,
+      },
+      {
+        name: AttributeName.ASSISTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.DRIBBLING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SHOOTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SKILLS,
+        value: 5,
+      },
+    ],
   };
 
   it('should create a player instance', () => {
@@ -24,6 +45,5 @@ describe('Player', () => {
     expect(player.nickname).toEqual(playerData.nickname);
     expect(player.age).toEqual(playerData.age);
     expect(player.position).toEqual(playerData.position);
-    expect(player.score).toEqual(playerData.score);
   });
 });

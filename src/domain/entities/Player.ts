@@ -9,6 +9,19 @@ export enum PlayerPosition {
   FW = 'Atacante',
 }
 
+export enum AttributeName {
+  DEFENSE = 'Defesa',
+  ASSISTING = 'Assistência',
+  SHOOTING = 'Chute',
+  DRIBBLING = 'Drible',
+  SKILLS = 'Habilidades',
+}
+
+export type PlayerAttribute = {
+  name: AttributeName;
+  value: number;
+};
+
 abstract class PlayerProps {
   constructor(
     public id: string,
@@ -16,8 +29,9 @@ abstract class PlayerProps {
     public nickname: string,
     public age: number,
     public position: PlayerPosition,
-    public score: number,
     public userId: string,
+    public attributes: PlayerAttribute[],
+    public score?: number,
   ) {}
 }
 
@@ -29,8 +43,8 @@ export class Player extends PlayerProps {
       player.nickname,
       player.age,
       player.position,
-      player.score,
       player.userId,
+      player.attributes,
     );
   }
 

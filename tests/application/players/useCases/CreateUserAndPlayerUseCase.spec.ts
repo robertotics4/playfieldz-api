@@ -1,11 +1,13 @@
 import { MockProxy, mock } from 'jest-mock-extended';
 import {
   AppError,
+  AttributeName,
   CreateUserAndPlayerDTO,
   ICreateUserAndPlayerUseCase,
   IEncryptor,
   IPlayerRepository,
   IUserRepository,
+  PlayerAttribute,
   PlayerPosition,
   User,
 } from '@/domain';
@@ -17,6 +19,7 @@ describe('CreateUserAndPlayerUseCase', () => {
   let playerRepositoryStub: MockProxy<IPlayerRepository>;
   let encryptorStub: MockProxy<IEncryptor>;
   let dto: CreateUserAndPlayerDTO;
+  let defaultPlayerAttributes: PlayerAttribute[];
 
   beforeAll(() => {
     userRepositoryStub = mock();
@@ -34,10 +37,31 @@ describe('CreateUserAndPlayerUseCase', () => {
         nickname: 'John',
         age: 33,
         position: PlayerPosition.CB,
-        score: 3,
         userId: 'any_user_id',
       },
     };
+    defaultPlayerAttributes = [
+      {
+        name: AttributeName.DEFENSE,
+        value: 5,
+      },
+      {
+        name: AttributeName.ASSISTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.DRIBBLING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SHOOTING,
+        value: 5,
+      },
+      {
+        name: AttributeName.SKILLS,
+        value: 5,
+      },
+    ];
 
     const { password, ...userWithoutPassword } = dto.user;
 
@@ -48,6 +72,7 @@ describe('CreateUserAndPlayerUseCase', () => {
     playerRepositoryStub.create.mockResolvedValue({
       ...dto.player,
       id: 'any_player_id',
+      attributes: defaultPlayerAttributes,
       user: {
         id: 'any_user_id',
         phone: '5598985485698',
@@ -95,7 +120,10 @@ describe('CreateUserAndPlayerUseCase', () => {
   it('should call playerRepository.create with correct params', async () => {
     await sut.execute(dto);
 
-    expect(playerRepositoryStub.create).toHaveBeenCalledWith(dto.player);
+    expect(playerRepositoryStub.create).toHaveBeenCalledWith({
+      ...dto.player,
+      attributes: defaultPlayerAttributes,
+    });
     expect(playerRepositoryStub.create).toHaveBeenCalledTimes(1);
   });
 
@@ -149,14 +177,5 @@ describe('CreateUserAndPlayerUseCase', () => {
     await expect(promise).rejects.toEqual(
       new AppError('Telefone já cadastrado'),
     );
-  });
-
-  it('should throw if score is invalid', async () => {
-    const playerWithInvalidScore = { ...dto.player, score: 0 };
-    const invalidDto = { ...dto, player: playerWithInvalidScore };
-
-    const promise = sut.execute(invalidDto);
-
-    expect(promise).rejects.toBeInstanceOf(AppError);
   });
 });
