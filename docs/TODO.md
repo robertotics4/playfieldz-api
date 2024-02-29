@@ -8,7 +8,7 @@
 [ ] Deve ser possível exportar um JSON com as informações de um grupo, incluindo as dos jogadores
 [ ] Deve ser possível importar um arquivo JSON com as informações do grupo, incluindo as dos jogadores
 [x] Deve ser informado o tipo de pagamento do jogador ao adiciona-lo no grupo
-[x] Deve ser possível calcular o score do jogador baseado em seus atributos
+[] Deve ser possível calcular o score do jogador baseado em seus atributos
 
 # Módulo de contas de usuários
 [x] Deve ser possível autenticar o usuário usando o telefone e a senha

@@ -14,7 +14,8 @@
     "test:coverage": "npm t -- --coverage",
     "prepare": "husky install",
     "commit": "cz",
-    "start": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main/interfaces/rest"
+    "start:dev": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main/interfaces/rest",
+    "start": "node dist/main"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
