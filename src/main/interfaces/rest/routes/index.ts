@@ -9,14 +9,19 @@ import { ensureAuthenticated } from '../middlewares';
 const router = Router();
 
 // public routes
+router.get('/', (request, response) => {
+  return response.json({
+    appName: 'Playfieldz API',
+    version: '1.0.0',
+  });
+});
+
 router.use('/auth', authRouter);
 router.use('/register', registerRouter);
 
-router.use(ensureAuthenticated);
-
 // private routes
-router.use('/players', playersRouter);
-router.use('/groups', groupRouter);
-router.use('/matches', matchRouter);
+router.use('/players', ensureAuthenticated, playersRouter);
+router.use('/groups', ensureAuthenticated, groupRouter);
+router.use('/matches', ensureAuthenticated, matchRouter);
 
 export { router };
