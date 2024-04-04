@@ -1,4 +1,5 @@
 import express, { NextFunction, Request, Response } from 'express';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
 import { errors } from 'celebrate';
@@ -9,6 +10,7 @@ import { router } from './routes';
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 app.use(errors());
 app.use(router);
