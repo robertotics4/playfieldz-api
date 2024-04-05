@@ -1,6 +1,6 @@
 import { Router } from 'express';
-import { playersRouter } from './players.router';
-import { registerRouter } from './register.router';
+import { playersRouter } from './players.routes';
+import { registerRouter } from './register.routes';
 import { groupRouter } from './groups.router';
 import { matchRouter } from './matches.routes';
 import { authRouter } from './auth.routes';

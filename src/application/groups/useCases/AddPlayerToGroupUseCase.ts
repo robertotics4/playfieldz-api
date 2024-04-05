@@ -2,11 +2,11 @@ import { inject, injectable } from 'tsyringe';
 import {
   AddPlayerToGroupDTO,
   AppError,
-  GroupPlayer,
   IAddPlayerToGroupUseCase,
-  IGroupPlayerRepository,
+  IGroupRepository,
   IPlayerRepository,
   IUpdateUserPermissionsUseCase,
+  PlayerSubscription,
   UserPermission,
 } from '@/domain';
 
@@ -16,8 +16,8 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     @inject('PlayerRepository') private playerRepository: IPlayerRepository,
     @inject('UpdateUserPermissionsUseCase')
     private updateUserPermissionsUseCase: IUpdateUserPermissionsUseCase,
-    @inject('GroupPlayerRepository')
-    private groupPlayerRepository: IGroupPlayerRepository,
+    @inject('GroupRepository')
+    private groupRepository: IGroupRepository,
   ) {}
 
   async execute({
@@ -25,8 +25,8 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     groupId,
     paymentRecurrence,
     playerId,
-  }: AddPlayerToGroupDTO): Promise<GroupPlayer> {
-    const player = await this.playerRepository.findOne({ id: playerId });
+  }: AddPlayerToGroupDTO): Promise<PlayerSubscription> {
+    const player = await this.playerRepository.findOne({ _id: playerId });
 
     if (!player) {
       throw new AppError('Jogador não encontrado');
@@ -47,18 +47,28 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
       );
     }
 
-    const playerAlreadyExists = await this.groupPlayerRepository.findOne({
-      playerId,
+    const group = await this.groupRepository.findOne({
+      _id: groupId,
     });
+
+    if (!group) {
+      throw new AppError('Grupo não encontrado');
+    }
+
+    const playerAlreadyExists = group.playerSubscriptions.find(
+      subscription => subscription.player._id,
+    );
 
     if (playerAlreadyExists) {
       throw new AppError('O jogador já está no grupo');
     }
 
-    return await this.groupPlayerRepository.create({
-      groupId,
-      playerId,
-      paymentRecurrence,
+    const subscription = { player, paymentRecurrence };
+
+    await this.groupRepository.update(groupId, {
+      playerSubscriptions: [...group.playerSubscriptions, subscription],
     });
+
+    return subscription;
   }
 }

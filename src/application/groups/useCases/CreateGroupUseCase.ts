@@ -18,7 +18,7 @@ export class CreateGroupUseCase implements ICreateGroupUseCase {
   ) {}
 
   async execute(dto: CreateGroupDTO): Promise<Group> {
-    const user = await this.userRepository.findOne({ id: dto.userId });
+    const user = await this.userRepository.findOne({ _id: dto.userId });
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
@@ -28,24 +28,20 @@ export class CreateGroupUseCase implements ICreateGroupUseCase {
       name: dto.name,
       description: dto.description,
       imageUrl: dto.imageUrl,
-      createdBy: dto.userId,
+      createdBy: user,
+      playerSubscriptions: [],
     });
 
     if (!createdGroup) {
       throw new AppError('Falha na criação do grupo');
     }
 
-    const updatedUser = await this.userRepository.update(user.id, {
+    await this.userRepository.update(user._id, {
       roles: [
         ...user.roles,
-        { groupId: createdGroup.id, permission: UserPermission.ADMIN },
+        { groupId: createdGroup._id, permission: UserPermission.ADMIN },
       ],
     });
-
-    createdGroup.creator = { ...updatedUser, password: undefined } as Omit<
-      User,
-      'password'
-    >;
 
     return createdGroup;
   }

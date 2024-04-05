@@ -15,15 +15,13 @@ export type UserRole = {
 export class User {
   _id: string;
 
-  phone?: string;
+  phone: string;
 
-  password?: string;
+  password: string;
 
   roles: UserRole[];
 
   player?: Player | undefined;
-
-  groups: Group[];
 
   constructor(user: User) {
     this._id = user._id;
@@ -31,6 +29,5 @@ export class User {
     this.password = user.password;
     this.roles = user.roles;
     this.player = user.player;
-    this.groups = user.groups;
   }
 }

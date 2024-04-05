@@ -34,7 +34,7 @@ export class UpdateUserPermissionsUseCase
       throw new AppError('Usuário sem permissão para esta operação');
     }
 
-    const user = await this.userRepository.findOne({ id: userId });
+    const user = await this.userRepository.findOne({ _id: userId });
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
@@ -46,7 +46,7 @@ export class UpdateUserPermissionsUseCase
       return user;
     }
 
-    const updatedUser = await this.userRepository.update(user.id, {
+    const updatedUser = await this.userRepository.update(user._id, {
       roles: [...user.roles, ...nonExistentRoles],
     });
 

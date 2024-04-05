@@ -1,6 +1,3 @@
-import { BaseDocument } from '@/infra';
-import { Document, Types } from 'mongoose';
-
 export enum PlayerPosition {
   GK = 'Goleiro',
   CB = 'Zagueiro',
@@ -23,18 +20,8 @@ export type PlayerAttribute = {
   value: number;
 };
 
-export interface PlayerDocument extends BaseDocument {
-  name: string;
-  nickname: string;
-  age: number;
-  position: PlayerPosition;
-  userId: string;
-  attributes: PlayerAttribute[];
-  score?: number;
-}
-
-export class Player extends Document implements PlayerDocument {
-  override _id: Types.ObjectId;
+export class Player {
+  _id: string;
 
   name: string;
 
@@ -50,8 +37,7 @@ export class Player extends Document implements PlayerDocument {
 
   score?: number;
 
-  constructor(player: PlayerDocument) {
-    super();
+  constructor(player: Player) {
     this._id = player._id;
     this.name = player.name;
     this.nickname = player.nickname;

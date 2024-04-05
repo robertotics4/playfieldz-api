@@ -31,7 +31,6 @@ async function createRootUser(): Promise<User> {
     phone: 'root@777',
     password: 'root@777',
     roles: [],
-    groups: [],
   });
 }
 
@@ -42,7 +41,7 @@ async function createRootGroup(rootUser: User, hash: string): Promise<Group> {
     const newGroup = await groupRepository.create({
       name: hash,
       createdBy: rootUser,
-      groupPlayers: [],
+      playerSubscriptions: [],
     });
 
     return newGroup;

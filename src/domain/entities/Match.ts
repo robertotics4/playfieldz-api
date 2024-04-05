@@ -1,24 +1,13 @@
-import { BaseDocument } from '@/infra';
-import { Document, Types } from 'mongoose';
-import { GroupDocument } from './Group';
-import { PlayerDocument } from './Player';
+import { Group } from './Group';
+import { Player } from './Player';
 
 export type Location = {
   latitude: string;
   longitude: string;
 };
 
-export interface MatchDocument extends BaseDocument {
-  schedulling: Date;
-  maxPlayerLimit: number;
-  playersPerTeam: number;
-  group: GroupDocument;
-  matchPlayers: PlayerDocument[];
-  location?: Location;
-}
-
-export class Match extends Document implements MatchDocument {
-  override _id: Types.ObjectId;
+export class Match {
+  _id: string;
 
   schedulling: Date;
 
@@ -26,14 +15,13 @@ export class Match extends Document implements MatchDocument {
 
   playersPerTeam: number;
 
-  group: GroupDocument;
+  group: Group;
 
-  matchPlayers: PlayerDocument[];
+  matchPlayers: Player[];
 
   location?: Location;
 
-  constructor(match: MatchDocument) {
-    super();
+  constructor(match: Match) {
     this._id = match._id;
     this.schedulling = match.schedulling;
     this.maxPlayerLimit = match.maxPlayerLimit;

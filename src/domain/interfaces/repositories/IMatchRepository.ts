@@ -1,7 +1,4 @@
 import { Match } from '@/domain/entities';
+import { IBaseRepository } from './IBaseRepository';
 
-export interface IMatchRepository {
-  create(data: Omit<Match, 'id'>): Promise<Match>;
-  findOne(filters: Partial<Match>): Promise<Match | null>;
-  list(): Promise<Match[]>;
-}
+export type IMatchRepository = IBaseRepository<Match>;

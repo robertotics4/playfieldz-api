@@ -12,7 +12,6 @@ const UserSchema = new Schema(
     password: { type: String, require: true },
     roles: { type: [UserRoleSchema], default: [] },
     player: { type: Schema.Types.ObjectId, ref: 'Player' },
-    groups: [{ type: Schema.Types.ObjectId, ref: 'Group' }],
   },
   { timestamps: true },
 );

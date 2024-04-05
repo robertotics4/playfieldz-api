@@ -2,7 +2,6 @@ import {
   AppError,
   ConfirmPlayerPresenceDTO,
   IConfirmPlayerPresenceUseCase,
-  IMatchPlayerRepository,
   IMatchRepository,
   IPlayerRepository,
   IUserRepository,
@@ -18,21 +17,19 @@ export class ConfirmPlayerPresenceUseCase
     @inject('UserRepository') private userRepository: IUserRepository,
     @inject('MatchRepository') private matchRepository: IMatchRepository,
     @inject('PlayerRepository') private playerRepository: IPlayerRepository,
-    @inject('MatchPlayerRepository')
-    private matchPlayerRepository: IMatchPlayerRepository,
   ) {}
 
   async execute({
     userId,
     matchId,
   }: ConfirmPlayerPresenceDTO): Promise<boolean> {
-    const user = await this.userRepository.findOne({ id: userId });
+    const user = await this.userRepository.findOne({ _id: userId });
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
     }
 
-    const match = await this.matchRepository.findOne({ id: matchId });
+    const match = await this.matchRepository.findOne({ _id: matchId });
 
     if (!match) {
       throw new AppError('Partida não encontrada');
@@ -40,30 +37,29 @@ export class ConfirmPlayerPresenceUseCase
 
     const userPermission = user.roles.find(
       r =>
-        r.groupId === match.groupId && r.permission === UserPermission.PLAYER,
+        r.groupId === match.group._id && r.permission === UserPermission.PLAYER,
     );
 
     if (!userPermission) {
       throw new AppError('Usuário sem permissão');
     }
 
-    const player = await this.playerRepository.findOne({ userId: user.id });
+    const player = await this.playerRepository.findOne({ userId: user._id });
 
     if (!player) {
       throw new AppError('Jogador não encontrado');
     }
 
-    const playerAlreadyExists = await this.matchPlayerRepository.findOne({
-      playerId: player.id,
-    });
+    const playerAlreadyExists = match.matchPlayers.find(
+      matchPlayer => matchPlayer._id === player._id,
+    );
 
     if (playerAlreadyExists) {
       throw new AppError('O jogador já confirmou presença');
     }
 
-    await this.matchPlayerRepository.create({
-      matchId,
-      playerId: player.id,
+    await this.matchRepository.update(match._id, {
+      matchPlayers: [...match.matchPlayers, player],
     });
 
     return true;

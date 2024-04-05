@@ -1,4 +1,4 @@
-import { PlayerDocument } from './Player';
+import { Player } from './Player';
 import { User } from './User';
 
 export enum PlayerPaymentRecurrence {
@@ -6,8 +6,8 @@ export enum PlayerPaymentRecurrence {
   MONTHLY = 'Mensalista',
 }
 
-export type GroupPlayer = {
-  player: PlayerDocument;
+export type PlayerSubscription = {
+  player: Player;
   paymentRecurrence: PlayerPaymentRecurrence;
 };
 
@@ -18,7 +18,7 @@ export class Group {
 
   createdBy: User;
 
-  groupPlayers: GroupPlayer[];
+  playerSubscriptions: PlayerSubscription[];
 
   description?: string;
 
@@ -28,7 +28,7 @@ export class Group {
     this._id = group._id;
     this.name = group.name;
     this.createdBy = group.createdBy;
-    this.groupPlayers = group.groupPlayers;
+    this.playerSubscriptions = group.playerSubscriptions;
     this.description = group.description;
     this.imageUrl = group.imageUrl;
   }
