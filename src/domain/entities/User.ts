@@ -1,3 +1,6 @@
+import { Player } from './Player';
+import { Group } from './Group';
+
 export enum UserPermission {
   PLAYER = 'Player',
   ADMIN = 'Administrator',
@@ -9,17 +12,25 @@ export type UserRole = {
   permission: UserPermission;
 };
 
-abstract class UserProps {
-  constructor(
-    public id: string,
-    public phone: string,
-    public password: string,
-    public roles: UserRole[],
-  ) {}
-}
+export class User {
+  _id: string;
 
-export class User extends UserProps {
-  constructor(user: UserProps) {
-    super(user.id, user.phone, user.password, user.roles);
+  phone?: string;
+
+  password?: string;
+
+  roles: UserRole[];
+
+  player?: Player | undefined;
+
+  groups: Group[];
+
+  constructor(user: User) {
+    this._id = user._id;
+    this.phone = user.phone;
+    this.password = user.password;
+    this.roles = user.roles;
+    this.player = user.player;
+    this.groups = user.groups;
   }
 }

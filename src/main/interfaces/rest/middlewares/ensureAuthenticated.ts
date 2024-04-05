@@ -30,7 +30,7 @@ export async function ensureAuthenticated(
 
     const usersRepository = container.resolve(UserRepository);
 
-    const user = await usersRepository.findOne({ id: userId });
+    const user = await usersRepository.findOne({ _id: userId });
 
     if (!user) {
       throw new AppError('Usuário não encontrado', 401);

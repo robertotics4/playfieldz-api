@@ -1,25 +1,35 @@
+import { PlayerDocument } from './Player';
 import { User } from './User';
 
-abstract class GroupProps {
-  constructor(
-    public id: string,
-    public name: string,
-    public createdBy: string,
-    public description?: string,
-    public imageUrl?: string,
-  ) {}
+export enum PlayerPaymentRecurrence {
+  DAILY = 'Diarista',
+  MONTHLY = 'Mensalista',
 }
 
-export class Group extends GroupProps {
-  constructor(group: GroupProps) {
-    super(
-      group.id,
-      group.name,
-      group.createdBy,
-      group.description,
-      group.imageUrl,
-    );
-  }
+export type GroupPlayer = {
+  player: PlayerDocument;
+  paymentRecurrence: PlayerPaymentRecurrence;
+};
 
-  creator?: Omit<User, 'password'>;
+export class Group {
+  _id: string;
+
+  name: string;
+
+  createdBy: User;
+
+  groupPlayers: GroupPlayer[];
+
+  description?: string;
+
+  imageUrl?: string;
+
+  constructor(group: Group) {
+    this._id = group._id;
+    this.name = group.name;
+    this.createdBy = group.createdBy;
+    this.groupPlayers = group.groupPlayers;
+    this.description = group.description;
+    this.imageUrl = group.imageUrl;
+  }
 }

@@ -1,4 +1,5 @@
-import { User } from './User';
+import { BaseDocument } from '@/infra';
+import { Document, Types } from 'mongoose';
 
 export enum PlayerPosition {
   GK = 'Goleiro',
@@ -22,31 +23,42 @@ export type PlayerAttribute = {
   value: number;
 };
 
-abstract class PlayerProps {
-  constructor(
-    public id: string,
-    public name: string,
-    public nickname: string,
-    public age: number,
-    public position: PlayerPosition,
-    public userId: string,
-    public attributes: PlayerAttribute[],
-    public score?: number,
-  ) {}
+export interface PlayerDocument extends BaseDocument {
+  name: string;
+  nickname: string;
+  age: number;
+  position: PlayerPosition;
+  userId: string;
+  attributes: PlayerAttribute[];
+  score?: number;
 }
 
-export class Player extends PlayerProps {
-  constructor(player: PlayerProps) {
-    super(
-      player.id,
-      player.name,
-      player.nickname,
-      player.age,
-      player.position,
-      player.userId,
-      player.attributes,
-    );
-  }
+export class Player extends Document implements PlayerDocument {
+  override _id: Types.ObjectId;
 
-  user?: Omit<User, 'password'>;
+  name: string;
+
+  nickname: string;
+
+  age: number;
+
+  position: PlayerPosition;
+
+  userId: string;
+
+  attributes: PlayerAttribute[];
+
+  score?: number;
+
+  constructor(player: PlayerDocument) {
+    super();
+    this._id = player._id;
+    this.name = player.name;
+    this.nickname = player.nickname;
+    this.age = player.age;
+    this.position = player.position;
+    this.userId = player.userId;
+    this.attributes = player.attributes;
+    this.score = player.score;
+  }
 }
