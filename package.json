@@ -14,9 +14,9 @@
     "test:coverage": "npm t -- --coverage",
     "prepare": "husky install",
     "commit": "cz",
+    "seeds:dev": "ts-node-dev -r dotenv/config src/infra/database/mongoose/seeds/createRoot.ts",
     "start:dev": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main/interfaces/rest",
-    "start": "node dist/main",
-    "seeds:dev": "ts-node-dev --transpile-only -r dotenv/config src/infra/database/mongoose/seeds"
+    "start": "node dist/main"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",
