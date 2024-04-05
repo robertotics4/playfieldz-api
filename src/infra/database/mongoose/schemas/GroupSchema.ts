@@ -1,5 +1,5 @@
 import { Group } from '@/domain';
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const PlayerSubscriptionSchema = new Schema({
   player: { type: Schema.Types.ObjectId, ref: 'Player' },
@@ -18,5 +18,6 @@ const GroupSchema = new Schema(
 );
 
 GroupSchema.loadClass(Group);
+const GroupModel = model('Group', GroupSchema);
 
-export { GroupSchema };
+export { GroupModel, GroupSchema };

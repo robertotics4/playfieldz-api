@@ -35,17 +35,24 @@ export class ConfirmPlayerPresenceUseCase
       throw new AppError('Partida não encontrada');
     }
 
-    const userPermission = user.roles.find(
-      r =>
-        r.groupId === match.group._id && r.permission === UserPermission.PLAYER,
-    );
+    const userPermission = user.roles.find(r => {
+      console.log({
+        roleId: r.groupId,
+        matchGroupId: match.group._id,
+        isEqual: r.groupId.equals(match.group._id),
+      });
+      return (
+        r.groupId.equals(match.group._id) &&
+        r.permission === UserPermission.PLAYER
+      );
+    });
+
+    if (!userPermission) {
+      throw new AppError('Usuário não é um jogador do grupo');
+    }
 
     if (!user.player) {
       throw new AppError('Usuário não possui um cadastro como jogador');
-    }
-
-    if (!userPermission) {
-      throw new AppError('Usuário sem permissão');
     }
 
     const player = await this.playerRepository.findById(user.player._id);

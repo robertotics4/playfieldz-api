@@ -1,4 +1,5 @@
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
+import mongooseAutopopulate from 'mongoose-autopopulate';
 import { Match } from '@/domain';
 
 const MatchLocationSchema = new Schema({
@@ -12,12 +13,17 @@ const MatchSchema = new Schema(
     maxPlayerLimit: { type: Number, required: true },
     playersPerTeam: { type: Number, required: true },
     group: { type: Schema.Types.ObjectId, ref: 'Group', required: true },
-    matchPlayers: [{ type: Schema.Types.ObjectId, ref: 'Player' }],
+    matchPlayers: [
+      { type: Schema.Types.ObjectId, ref: 'Player', autopopulate: true },
+    ],
     location: MatchLocationSchema,
   },
   { timestamps: true },
 );
 
-MatchSchema.loadClass(Match);
+MatchSchema.plugin(mongooseAutopopulate);
 
-export { MatchSchema };
+MatchSchema.loadClass(Match);
+const MatchModel = model('Match', MatchSchema);
+
+export { MatchModel, MatchSchema };

@@ -11,6 +11,7 @@ import {
   IJsonWebToken,
   IListMatchesUseCase,
   IListPlayersUseCase,
+  IListUsersUseCase,
   IMatchRepository,
   IPlayerRepository,
   IUpdateUserPermissionsUseCase,
@@ -26,6 +27,7 @@ import {
   CreateUserAndPlayerUseCase,
   ListMatchesUseCase,
   ListPlayersUseCase,
+  ListUsersUseCase,
   UpdateUserPermissionsUseCase,
   VerifyUserPermissionUseCase,
 } from '@/application';
@@ -111,4 +113,9 @@ container.registerSingleton<IUpdateUserPermissionsUseCase>(
 container.registerSingleton<IListMatchesUseCase>(
   'ListMatchesUseCase',
   ListMatchesUseCase,
+);
+
+container.registerSingleton<IListUsersUseCase>(
+  'ListUsersUseCase',
+  ListUsersUseCase,
 );

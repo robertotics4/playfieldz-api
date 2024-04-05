@@ -1,5 +1,5 @@
 import { Player } from '@/domain';
-import { Schema } from 'mongoose';
+import { Schema, model } from 'mongoose';
 
 const PlayerAttributeSchema = new Schema({
   name: String,
@@ -20,5 +20,6 @@ const PlayerSchema = new Schema(
 );
 
 PlayerSchema.loadClass(Player);
+const PlayerModel = model('Player', PlayerSchema);
 
-export { PlayerSchema };
+export { PlayerModel, PlayerSchema };

@@ -5,6 +5,7 @@ import { groupRouter } from './groups.router';
 import { matchRouter } from './matches.routes';
 import { authRouter } from './auth.routes';
 import { ensureAuthenticated } from '../middlewares';
+import { userRouter } from './users.routes';
 
 const router = Router();
 
@@ -23,5 +24,6 @@ router.use('/register', registerRouter);
 router.use('/players', ensureAuthenticated, playersRouter);
 router.use('/groups', ensureAuthenticated, groupRouter);
 router.use('/matches', ensureAuthenticated, matchRouter);
+router.use('/users', ensureAuthenticated, userRouter); // ATUALIZAR PARA SOMENTE ROOT
 
 export { router };
