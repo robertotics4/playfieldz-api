@@ -16,7 +16,7 @@
     "commit": "cz",
     "start:dev": "ts-node-dev --respawn --transpile-only -r dotenv/config src/main/interfaces/rest",
     "start": "node dist/main",
-    "database:seeds": "npm run build && node src/infra/database/mongoose/seeds"
+    "seeds:dev": "ts-node-dev --transpile-only -r dotenv/config src/infra/database/mongoose/seeds"
   },
   "devDependencies": {
     "@commitlint/cli": "^18.2.0",

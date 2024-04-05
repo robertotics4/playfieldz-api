@@ -1,4 +1,5 @@
 import 'reflect-metadata';
+import '../../../../main/config/module-alias';
 import mongoose from 'mongoose';
 import { container } from 'tsyringe';
 import { Group, User, UserPermission } from '@/domain';

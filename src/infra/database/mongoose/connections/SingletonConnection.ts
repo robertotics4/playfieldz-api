@@ -10,6 +10,7 @@ export class SingletonConnection
 
   private constructor() {
     this.mongooseInstance = mongoose;
+    this.connect(process.env.DATABASE_URL || '', {});
   }
 
   public static getInstance(): SingletonConnection {
