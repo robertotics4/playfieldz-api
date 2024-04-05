@@ -1,3 +1,5 @@
+import { Types } from 'mongoose';
+
 export enum PlayerPosition {
   GK = 'Goleiro',
   CB = 'Zagueiro',
@@ -21,7 +23,7 @@ export type PlayerAttribute = {
 };
 
 export class Player {
-  _id: string;
+  _id: Types.ObjectId;
 
   name: string;
 

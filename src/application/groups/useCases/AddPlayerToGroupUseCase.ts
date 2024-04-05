@@ -9,6 +9,7 @@ import {
   PlayerSubscription,
   UserPermission,
 } from '@/domain';
+import { Types } from 'mongoose';
 
 @injectable()
 export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
@@ -26,7 +27,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
     paymentRecurrence,
     playerId,
   }: AddPlayerToGroupDTO): Promise<PlayerSubscription> {
-    const player = await this.playerRepository.findOne({ _id: playerId });
+    const player = await this.playerRepository.findById(playerId);
 
     if (!player) {
       throw new AppError('Jogador não encontrado');
@@ -37,7 +38,12 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
         adminId,
         groupId,
         userId: player.userId,
-        roles: [{ groupId, permission: UserPermission.PLAYER }],
+        roles: [
+          {
+            groupId: new Types.ObjectId(groupId),
+            permission: UserPermission.PLAYER,
+          },
+        ],
       },
     );
 
@@ -47,16 +53,14 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
       );
     }
 
-    const group = await this.groupRepository.findOne({
-      _id: groupId,
-    });
+    const group = await this.groupRepository.findById(groupId);
 
     if (!group) {
       throw new AppError('Grupo não encontrado');
     }
 
-    const playerAlreadyExists = group.playerSubscriptions.find(
-      subscription => subscription.player._id,
+    const playerAlreadyExists = group.playerSubscriptions.find(subscription =>
+      subscription.player._id.equals(new Types.ObjectId(playerId)),
     );
 
     if (playerAlreadyExists) {

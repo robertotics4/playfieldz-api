@@ -1,9 +1,9 @@
-import { User, UserPermission } from '@/domain';
+import { User } from '@/domain';
 import { Schema, model } from 'mongoose';
 
 const UserRoleSchema = new Schema({
   groupId: Schema.Types.ObjectId,
-  permission: { type: String, enum: Object.values(UserPermission) },
+  permission: String,
 });
 
 const UserSchema = new Schema(

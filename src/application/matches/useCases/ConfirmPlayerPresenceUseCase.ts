@@ -23,13 +23,13 @@ export class ConfirmPlayerPresenceUseCase
     userId,
     matchId,
   }: ConfirmPlayerPresenceDTO): Promise<boolean> {
-    const user = await this.userRepository.findOne({ _id: userId });
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
     }
 
-    const match = await this.matchRepository.findOne({ _id: matchId });
+    const match = await this.matchRepository.findById(matchId);
 
     if (!match) {
       throw new AppError('Partida não encontrada');
@@ -40,11 +40,15 @@ export class ConfirmPlayerPresenceUseCase
         r.groupId === match.group._id && r.permission === UserPermission.PLAYER,
     );
 
+    if (!user.player) {
+      throw new AppError('Usuário não possui um cadastro como jogador');
+    }
+
     if (!userPermission) {
       throw new AppError('Usuário sem permissão');
     }
 
-    const player = await this.playerRepository.findOne({ userId: user._id });
+    const player = await this.playerRepository.findById(user.player._id);
 
     if (!player) {
       throw new AppError('Jogador não encontrado');

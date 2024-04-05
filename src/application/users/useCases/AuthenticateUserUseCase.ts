@@ -41,14 +41,14 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       {},
       process.env.JWT_HASH_MD5 as string,
       {
-        subject: user._id,
+        subject: user._id.toString(),
         expiresIn: tokenExpirationInSeconds,
       },
     );
 
     return {
       user: {
-        id: user._id,
+        id: String(user._id),
         phone: user.phone,
       },
       token,

@@ -1,12 +1,9 @@
-import { Group, PlayerPaymentRecurrence } from '@/domain';
+import { Group } from '@/domain';
 import { Schema } from 'mongoose';
 
 const PlayerSubscriptionSchema = new Schema({
   player: { type: Schema.Types.ObjectId, ref: 'Player' },
-  paymentRecurrence: {
-    type: String,
-    enum: Object.values(PlayerPaymentRecurrence),
-  },
+  paymentRecurrence: String,
 });
 
 const GroupSchema = new Schema(

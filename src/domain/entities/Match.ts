@@ -1,3 +1,4 @@
+import { Types } from 'mongoose';
 import { Group } from './Group';
 import { Player } from './Player';
 
@@ -7,7 +8,7 @@ export type Location = {
 };
 
 export class Match {
-  _id: string;
+  _id: Types.ObjectId;
 
   schedulling: Date;
 

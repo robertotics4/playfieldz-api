@@ -23,13 +23,13 @@ export class VerifyUserPermissionUseCase
     groupId,
     userId,
   }: VerifyUserPermissionDTO): Promise<boolean> {
-    const group = await this.groupRepository.findOne({ _id: groupId });
+    const group = await this.groupRepository.findById(groupId);
 
     if (!group) {
       throw new AppError('Grupo não encontrado');
     }
 
-    const user = await this.userRepository.findOne({ _id: userId });
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
@@ -46,7 +46,9 @@ export class VerifyUserPermissionUseCase
 
   private verifyPermission(user: User, group: Group): boolean {
     const hasPermission = user.roles.some(r => {
-      return r.groupId === group._id && r.permission === UserPermission.ADMIN;
+      return (
+        r.groupId.equals(group._id) && r.permission === UserPermission.ADMIN
+      );
     });
 
     return hasPermission;

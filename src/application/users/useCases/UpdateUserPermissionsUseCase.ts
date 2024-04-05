@@ -30,11 +30,13 @@ export class UpdateUserPermissionsUseCase
       userId: adminId,
     });
 
+    console.log(isAdmin);
+
     if (!isAdmin) {
       throw new AppError('Usuário sem permissão para esta operação');
     }
 
-    const user = await this.userRepository.findOne({ _id: userId });
+    const user = await this.userRepository.findById(userId);
 
     if (!user) {
       throw new AppError('Usuário não encontrado');
