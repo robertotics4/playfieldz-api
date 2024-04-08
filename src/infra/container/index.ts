@@ -14,6 +14,7 @@ import {
   IListUsersUseCase,
   IMatchRepository,
   IPlayerRepository,
+  IRecoverUserInformationUseCase,
   IUpdateUserPermissionsUseCase,
   IUserRepository,
   IVerifyUserPermissionUseCase,
@@ -28,6 +29,7 @@ import {
   ListMatchesUseCase,
   ListPlayersUseCase,
   ListUsersUseCase,
+  RecoverUserInformationUseCase,
   UpdateUserPermissionsUseCase,
   VerifyUserPermissionUseCase,
 } from '@/application';
@@ -118,4 +120,9 @@ container.registerSingleton<IListMatchesUseCase>(
 container.registerSingleton<IListUsersUseCase>(
   'ListUsersUseCase',
   ListUsersUseCase,
+);
+
+container.registerSingleton<IRecoverUserInformationUseCase>(
+  'RecoverUserInformationUseCase',
+  RecoverUserInformationUseCase,
 );
