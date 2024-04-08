@@ -21,6 +21,9 @@ export class RecoverUserInformationUseCase
       throw new AppError('Usuário não encontrado');
     }
 
-    return user;
+    // eslint-disable-next-line
+    const { password, ...userWithoutPassword } = user;
+
+    return userWithoutPassword;
   }
 }
