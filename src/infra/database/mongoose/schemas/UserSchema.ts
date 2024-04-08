@@ -9,6 +9,7 @@ const UserRoleSchema = new Schema({
 
 const UserSchema = new Schema(
   {
+    name: { type: String, required: true },
     phone: { type: String, require: true },
     password: { type: String, require: true },
     roles: { type: [UserRoleSchema], default: [] },

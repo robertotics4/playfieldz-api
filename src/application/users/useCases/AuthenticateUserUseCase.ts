@@ -50,6 +50,7 @@ export class AuthenticateUserUseCase implements IAuthenticateUserUseCase {
       user: {
         id: String(user._id),
         phone: user.phone,
+        name: user.name,
       },
       token,
       tokenExpirationInSeconds,

@@ -8,7 +8,6 @@ const PlayerAttributeSchema = new Schema({
 
 const PlayerSchema = new Schema(
   {
-    name: { type: String, required: true },
     nickname: { type: String, required: true },
     age: { type: Number, required: true },
     position: String,

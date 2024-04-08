@@ -15,6 +15,8 @@ export type UserRole = {
 export class User {
   _id: Types.ObjectId;
 
+  name: string;
+
   phone: string;
 
   password: string;
@@ -25,6 +27,7 @@ export class User {
 
   constructor(user: User) {
     this._id = user._id;
+    this.name = user.name;
     this.phone = user.phone;
     this.password = user.password;
     this.roles = user.roles;

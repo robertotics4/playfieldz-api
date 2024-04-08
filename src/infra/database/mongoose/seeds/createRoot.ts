@@ -29,6 +29,7 @@ async function createRootUser(): Promise<User> {
   if (existentUser) return existentUser;
 
   return await userRepository.create({
+    name: 'root',
     phone: 'root@777',
     password: 'root@777',
     roles: [],

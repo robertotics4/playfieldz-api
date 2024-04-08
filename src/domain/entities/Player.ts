@@ -25,8 +25,6 @@ export type PlayerAttribute = {
 export class Player {
   _id: Types.ObjectId;
 
-  name: string;
-
   nickname: string;
 
   age: number;
@@ -41,7 +39,6 @@ export class Player {
 
   constructor(player: Player) {
     this._id = player._id;
-    this.name = player.name;
     this.nickname = player.nickname;
     this.age = player.age;
     this.position = player.position;

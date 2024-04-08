@@ -4,6 +4,7 @@ export type AuthInfo = {
   user: {
     id: string;
     phone: string;
+    name: string;
   };
   token: string;
   tokenExpirationInSeconds: number;
