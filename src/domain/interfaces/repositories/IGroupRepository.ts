@@ -1,4 +1,6 @@
 import { Group } from '@/domain/entities';
 import { IBaseRepository } from './IBaseRepository';
 
-export type IGroupRepository = IBaseRepository<Group>;
+export interface IGroupRepository extends IBaseRepository<Group> {
+  findByCreatedBy(userId: string): Promise<Group[]>;
+}

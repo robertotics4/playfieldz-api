@@ -1,4 +1,4 @@
-import { Types } from 'mongoose';
+import { FilterQuery, Types } from 'mongoose';
 
 export interface IBaseRepository<T> {
   create(data: Omit<T, '_id'>): Promise<T>;
@@ -8,4 +8,5 @@ export interface IBaseRepository<T> {
   findOne(filters: Partial<T>): Promise<T | null>;
   findById(id: string | Types.ObjectId): Promise<T | null>;
   deleteMany(filter: Partial<T>): Promise<number>;
+  find(filter: FilterQuery<Document>): Promise<T[]>;
 }

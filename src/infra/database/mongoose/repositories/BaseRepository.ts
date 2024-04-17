@@ -57,4 +57,10 @@ export class BaseRepository<T> implements IBaseRepository<T> {
     const result = await this.model.deleteMany(filter as FilterQuery<T>);
     return result.deletedCount ?? 0;
   }
+
+  async find(filter: FilterQuery<T>): Promise<T[]> {
+    const documents = await this.model.find(filter);
+
+    return documents.map(doc => doc.toObject() as T);
+  }
 }

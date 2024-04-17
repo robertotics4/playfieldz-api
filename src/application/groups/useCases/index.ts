@@ -1,3 +1,3 @@
 export * from './CreateGroupUseCase';
 export * from './AddPlayerToGroupUseCase';
-export * from './ListGroupsUseCase';
+export * from './FindGroupsUseCase';
