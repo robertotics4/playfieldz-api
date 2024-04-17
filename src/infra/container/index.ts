@@ -9,6 +9,7 @@ import {
   IEncryptor,
   IGroupRepository,
   IJsonWebToken,
+  IListGroupsUseCase,
   IListMatchesUseCase,
   IListPlayersUseCase,
   IListUsersUseCase,
@@ -26,6 +27,7 @@ import {
   CreateGroupUseCase,
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
+  ListGroupsUseCase,
   ListMatchesUseCase,
   ListPlayersUseCase,
   ListUsersUseCase,
@@ -125,4 +127,9 @@ container.registerSingleton<IListUsersUseCase>(
 container.registerSingleton<IRecoverUserInformationUseCase>(
   'RecoverUserInformationUseCase',
   RecoverUserInformationUseCase,
+);
+
+container.registerSingleton<IListGroupsUseCase>(
+  'ListGroupsUseCase',
+  ListGroupsUseCase,
 );
