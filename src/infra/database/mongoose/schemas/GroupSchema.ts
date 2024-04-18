@@ -3,7 +3,7 @@ import { Group } from '@/domain';
 import { Schema, model } from 'mongoose';
 
 const PlayerSubscriptionSchema = new Schema({
-  player: { type: Schema.Types.ObjectId, ref: 'Player' },
+  player: { type: Schema.Types.ObjectId, ref: 'Player', autopopulate: true },
   paymentRecurrence: String,
 });
 
