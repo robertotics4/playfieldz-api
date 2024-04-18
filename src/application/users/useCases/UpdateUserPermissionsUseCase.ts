@@ -30,8 +30,6 @@ export class UpdateUserPermissionsUseCase
       userId: adminId,
     });
 
-    console.log(isAdmin);
-
     if (!isAdmin) {
       throw new AppError('Usuário sem permissão para esta operação');
     }
