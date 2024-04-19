@@ -1,2 +1,2 @@
 export * from './ICreateMatchUseCase';
-export * from './IListMatchesUseCase';
+export * from './IFindMatchesUseCase';

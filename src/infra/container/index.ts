@@ -8,9 +8,9 @@ import {
   ICreateUserAndPlayerUseCase,
   IEncryptor,
   IFindGroupsUseCase,
+  IFindMatchesUseCase,
   IGroupRepository,
   IJsonWebToken,
-  IListMatchesUseCase,
   IListPlayersUseCase,
   IListUsersUseCase,
   IMatchRepository,
@@ -28,7 +28,7 @@ import {
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
   FindGroupsUseCase,
-  ListMatchesUseCase,
+  FindMatchesUseCase,
   ListPlayersUseCase,
   ListUsersUseCase,
   RecoverUserInformationUseCase,
@@ -114,11 +114,6 @@ container.registerSingleton<IUpdateUserPermissionsUseCase>(
   UpdateUserPermissionsUseCase,
 );
 
-container.registerSingleton<IListMatchesUseCase>(
-  'ListMatchesUseCase',
-  ListMatchesUseCase,
-);
-
 container.registerSingleton<IListUsersUseCase>(
   'ListUsersUseCase',
   ListUsersUseCase,
@@ -132,4 +127,9 @@ container.registerSingleton<IRecoverUserInformationUseCase>(
 container.registerSingleton<IFindGroupsUseCase>(
   'FindGroupsUseCase',
   FindGroupsUseCase,
+);
+
+container.registerSingleton<IFindMatchesUseCase>(
+  'FindMatchesUseCase',
+  FindMatchesUseCase,
 );
