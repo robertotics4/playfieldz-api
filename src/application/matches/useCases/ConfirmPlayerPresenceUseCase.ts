@@ -36,11 +36,6 @@ export class ConfirmPlayerPresenceUseCase
     }
 
     const userPermission = user.roles.find(r => {
-      console.log({
-        roleId: r.groupId,
-        matchGroupId: match.group._id,
-        isEqual: r.groupId.equals(match.group._id),
-      });
       return (
         r.groupId.equals(match.group._id) &&
         r.permission === UserPermission.PLAYER
