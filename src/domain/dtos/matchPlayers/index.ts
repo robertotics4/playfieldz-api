@@ -1,1 +1,1 @@
-export * from './ConfirmPlayerPresenceDTO';
+export * from './UpdatePlayerPresenceDTO';

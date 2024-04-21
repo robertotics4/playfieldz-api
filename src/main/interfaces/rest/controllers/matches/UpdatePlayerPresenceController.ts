@@ -1,19 +1,21 @@
-import { ConfirmPlayerPresenceUseCase } from '@/application';
+import { UpdatePlayerPresenceUseCase } from '@/application';
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-export class ConfirmPlayerPresenceController {
+export class UpdatePlayerPresenceController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { id } = request.params;
     const { user } = request;
+    const { value } = request.body;
 
-    const confirmPlayerPresenceUseCase = container.resolve(
-      ConfirmPlayerPresenceUseCase,
+    const updatePlayerPresenceUseCase = container.resolve(
+      UpdatePlayerPresenceUseCase,
     );
 
-    await confirmPlayerPresenceUseCase.execute({
+    await updatePlayerPresenceUseCase.execute({
       matchId: id,
       userId: user.id,
+      value,
     });
 
     return response.status(204).send();

@@ -1,3 +1,3 @@
 export * from './CreateMatchUseCase';
-export * from './ConfirmPlayerPresenceUseCase';
+export * from './UpdatePlayerPresenceUseCase';
 export * from './FindMatchesUseCase';

@@ -2,7 +2,6 @@ import { container } from 'tsyringe';
 import {
   IAddPlayerToGroupUseCase,
   IAuthenticateUserUseCase,
-  IConfirmPlayerPresenceUseCase,
   ICreateGroupUseCase,
   ICreateMatchUseCase,
   ICreateUserAndPlayerUseCase,
@@ -16,6 +15,7 @@ import {
   IMatchRepository,
   IPlayerRepository,
   IRecoverUserInformationUseCase,
+  IUpdatePlayerPresenceUseCase,
   IUpdateUserPermissionsUseCase,
   IUserRepository,
   IVerifyUserPermissionUseCase,
@@ -23,7 +23,6 @@ import {
 import {
   AddPlayerToGroupUseCase,
   AuthenticateUserUseCase,
-  ConfirmPlayerPresenceUseCase,
   CreateGroupUseCase,
   CreateMatchUseCase,
   CreateUserAndPlayerUseCase,
@@ -32,6 +31,7 @@ import {
   ListPlayersUseCase,
   ListUsersUseCase,
   RecoverUserInformationUseCase,
+  UpdatePlayerPresenceUseCase,
   UpdateUserPermissionsUseCase,
   VerifyUserPermissionUseCase,
 } from '@/application';
@@ -104,9 +104,9 @@ container.registerSingleton<IAuthenticateUserUseCase>(
   AuthenticateUserUseCase,
 );
 
-container.registerSingleton<IConfirmPlayerPresenceUseCase>(
-  'ConfirmPlayerPresenceUseCase',
-  ConfirmPlayerPresenceUseCase,
+container.registerSingleton<IUpdatePlayerPresenceUseCase>(
+  'UpdatePlayerPresenceUseCase',
+  UpdatePlayerPresenceUseCase,
 );
 
 container.registerSingleton<IUpdateUserPermissionsUseCase>(

@@ -1,3 +1,3 @@
 export * from './CreateMatchController';
-export * from './ConfirmPlayerPresenceController';
+export * from './UpdatePlayerPresenceController';
 export * from './FindMatchesController';

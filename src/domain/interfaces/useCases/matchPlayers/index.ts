@@ -1,1 +1,1 @@
-export * from './IConfirmPlayerPresenceUseCase';
+export * from './IUpdatePlayerPresenceUseCase';
