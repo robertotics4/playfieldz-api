@@ -12,6 +12,7 @@ import {
   IJsonWebToken,
   IListPlayersUseCase,
   IListUsersUseCase,
+  ILoadUsersFromCsvUseCase,
   IMatchRepository,
   IPlayerRepository,
   IRecoverUserInformationUseCase,
@@ -30,6 +31,7 @@ import {
   FindMatchesUseCase,
   ListPlayersUseCase,
   ListUsersUseCase,
+  LoadUsersFromCsvUseCase,
   RecoverUserInformationUseCase,
   UpdatePlayerPresenceUseCase,
   UpdateUserPermissionsUseCase,
@@ -132,4 +134,9 @@ container.registerSingleton<IFindGroupsUseCase>(
 container.registerSingleton<IFindMatchesUseCase>(
   'FindMatchesUseCase',
   FindMatchesUseCase,
+);
+
+container.registerSingleton<ILoadUsersFromCsvUseCase>(
+  'LoadUsersFromCsvUseCase',
+  LoadUsersFromCsvUseCase,
 );

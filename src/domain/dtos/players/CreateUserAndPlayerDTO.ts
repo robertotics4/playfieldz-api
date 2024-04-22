@@ -11,6 +11,5 @@ export type CreateUserAndPlayerDTO = {
     nickname: string;
     age: number;
     position: PlayerPosition;
-    userId: string;
   };
 };
