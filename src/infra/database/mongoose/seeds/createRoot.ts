@@ -3,13 +3,22 @@ import '../../../../main/config/module-alias';
 import mongoose from 'mongoose';
 import { container } from 'tsyringe';
 import { Group, User, UserPermission } from '@/domain';
-import { GroupRepository, UserRepository } from '../repositories';
+import {
+  GroupRepository,
+  MatchRepository,
+  PlayerRepository,
+  UserRepository,
+} from '../repositories';
 
+const matchRepository = container.resolve(MatchRepository);
 const userRepository = container.resolve(UserRepository);
 const groupRepository = container.resolve(GroupRepository);
+const playerRepository = container.resolve(PlayerRepository);
 
 async function cleanAll() {
+  await matchRepository.deleteMany({});
   await userRepository.deleteMany({});
+  await playerRepository.deleteMany({});
   await groupRepository.deleteMany({});
 }
 
