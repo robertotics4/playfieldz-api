@@ -19,6 +19,7 @@
   ],
   "rules": {
     "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
     "no-constant-condition": "off",
     "no-shadow": "off",
     "no-await-in-loop": "off",

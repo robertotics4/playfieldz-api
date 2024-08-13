@@ -54,8 +54,6 @@ container.registerSingleton<IPlayerRepository>(
   PlayerRepository,
 );
 
-container.registerSingleton<IUserRepository>('UserRepository', UserRepository);
-
 container.registerSingleton<IGroupRepository>(
   'GroupRepository',
   GroupRepository,
