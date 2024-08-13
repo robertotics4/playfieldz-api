@@ -116,20 +116,18 @@ async function createFakePlayers(quantity: number): Promise<Player[]> {
 }
 
 async function createFakeGroups(userId: string): Promise<Group[]> {
-  const [firstGroup, secondGroup] = await Promise.all([
-    createGroupUseCase.execute({
-      name: 'FRC Resenha Futebol Clube',
-      userId,
-      description:
-        'Grupo de futebol fundado há mais de 10 anos com jogos localizados na arena do Grêmio no vinhais',
-    }),
-    createGroupUseCase.execute({
-      name: 'Pelada da PF',
-      userId,
-      description:
-        'Grupo de futebol fundado há mais de 10 anos com jogos localizados na Associação da Polícia Federal no Turu',
-    }),
-  ]);
+  const firstGroup = await createGroupUseCase.execute({
+    name: 'FRC Resenha Futebol Clube',
+    userId,
+    description:
+      'Grupo de futebol fundado há mais de 10 anos com jogos localizados na arena do Grêmio no vinhais',
+  });
+  const secondGroup = await createGroupUseCase.execute({
+    name: 'Pelada da PF',
+    userId,
+    description:
+      'Grupo de futebol fundado há mais de 10 anos com jogos localizados na Associação da Polícia Federal no Turu',
+  });
 
   return [firstGroup, secondGroup];
 }
@@ -160,29 +158,28 @@ async function main() {
     console.log(`User created successfuly!`);
 
     const groups = await createFakeGroups(myPlayer.userId);
-    Promise.all([
-      addPlayerToGroupUseCase.execute({
-        adminId: myPlayer.userId,
-        groupId: groups[0]._id.toString(),
-        paymentRecurrence: PlayerPaymentRecurrence.MONTHLY,
-        playerId: myPlayer._id.toString(),
-      }),
-      addPlayerToGroupUseCase.execute({
-        adminId: myPlayer.userId,
-        groupId: groups[1]._id.toString(),
-        paymentRecurrence: PlayerPaymentRecurrence.MONTHLY,
-        playerId: myPlayer._id.toString(),
-      }),
-    ]);
     console.log(`Groups created sucessfuly!`);
 
-    const maxPlayerLimit = 30;
+    await addPlayerToGroupUseCase.execute({
+      adminId: myPlayer.userId,
+      groupId: groups[0]._id.toString(),
+      paymentRecurrence: PlayerPaymentRecurrence.MONTHLY,
+      playerId: myPlayer._id.toString(),
+    });
+
+    await addPlayerToGroupUseCase.execute({
+      adminId: myPlayer.userId,
+      groupId: groups[1]._id.toString(),
+      paymentRecurrence: PlayerPaymentRecurrence.MONTHLY,
+      playerId: myPlayer._id.toString(),
+    });
+
+    const maxPlayerLimit = 14;
     const fakePlayers = await createFakePlayers(maxPlayerLimit);
     console.log(`${maxPlayerLimit} fake players created successfuly!`);
 
-    const addPromises = [];
     for (let counter = 0; counter < maxPlayerLimit; counter += 1) {
-      const promise = addPlayerToGroupUseCase.execute({
+      await addPlayerToGroupUseCase.execute({
         adminId: myPlayer.userId,
         groupId: groups[0]._id.toString(),
         paymentRecurrence:
@@ -192,11 +189,15 @@ async function main() {
         playerId: fakePlayers[counter]._id.toString(),
       });
 
-      addPromises.push(promise);
+      console.log(
+        `[${counter + 1}] Add player ${fakePlayers[counter]._id} to group ${
+          groups[0]._id
+        }`,
+      );
     }
 
     for (let counter = 0; counter < maxPlayerLimit; counter += 1) {
-      const promise = addPlayerToGroupUseCase.execute({
+      await addPlayerToGroupUseCase.execute({
         adminId: myPlayer.userId,
         groupId: groups[1]._id.toString(),
         paymentRecurrence:
@@ -206,10 +207,13 @@ async function main() {
         playerId: fakePlayers[counter]._id.toString(),
       });
 
-      addPromises.push(promise);
+      console.log(
+        `[${counter + 1}] Add player ${fakePlayers[counter]._id} to group ${
+          groups[1]._id
+        }`,
+      );
     }
 
-    await Promise.all(addPromises);
     console.log(`${maxPlayerLimit} players added to group ${groups[0].name}`);
     console.log(`${maxPlayerLimit} players added to group ${groups[1].name}`);
 
@@ -228,33 +232,35 @@ async function main() {
       ),
     ]);
 
-    const confirmPromises = [];
     for (let count = 0; count < maxPlayerLimit; count += 1) {
-      if (count % 2 === 0) {
-        const promise = updatePlayerPresenceUseCase.execute({
-          userId: fakePlayers[count].userId.toString(),
-          matchId: firstMatch._id.toString(),
-          value: true,
-        });
-        confirmPromises.push(promise);
-      }
+      await updatePlayerPresenceUseCase.execute({
+        userId: fakePlayers[count].userId.toString(),
+        matchId: firstMatch._id.toString(),
+        value: true,
+      });
+
+      console.log(
+        `[${count + 1}] Confirm user ${fakePlayers[count]._id} in match ${
+          firstMatch._id
+        }`,
+      );
     }
     for (let count = 0; count < maxPlayerLimit; count += 1) {
-      if (count % 2 === 0) {
-        const promise = updatePlayerPresenceUseCase.execute({
-          userId: fakePlayers[count].userId.toString(),
-          matchId: secondMatch._id.toString(),
-          value: true,
-        });
-        confirmPromises.push(promise);
-      }
+      await updatePlayerPresenceUseCase.execute({
+        userId: fakePlayers[count].userId.toString(),
+        matchId: secondMatch._id.toString(),
+        value: true,
+      });
+
+      console.log(
+        `[${count + 1}] Confirm user ${fakePlayers[count]._id} in match ${
+          secondMatch._id
+        }`,
+      );
     }
-    await Promise.all(confirmPromises);
+    console.log(`${maxPlayerLimit} users confirmed to match ${firstMatch._id}`);
     console.log(
-      `${maxPlayerLimit} players confirmed to match ${firstMatch._id}`,
-    );
-    console.log(
-      `${maxPlayerLimit} players confirmed to match ${secondMatch._id}`,
+      `${maxPlayerLimit} users confirmed to match ${secondMatch._id}`,
     );
 
     console.log('Seed completed successfully.');
