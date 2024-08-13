@@ -116,18 +116,20 @@ async function createFakePlayers(quantity: number): Promise<Player[]> {
 }
 
 async function createFakeGroups(userId: string): Promise<Group[]> {
-  const firstGroup = await createGroupUseCase.execute({
-    name: 'FRC Resenha Futebol Clube',
-    userId,
-    description:
-      'Grupo de futebol fundado há mais de 10 anos com jogos localizados na arena do Grêmio no vinhais',
-  });
-  const secondGroup = await createGroupUseCase.execute({
-    name: 'Pelada da PF',
-    userId,
-    description:
-      'Grupo de futebol fundado há mais de 10 anos com jogos localizados na Associação da Polícia Federal no Turu',
-  });
+  const [firstGroup, secondGroup] = await Promise.all([
+    createGroupUseCase.execute({
+      name: 'FRC Resenha Futebol Clube',
+      userId,
+      description:
+        'Grupo de futebol fundado há mais de 10 anos com jogos localizados na arena do Grêmio no vinhais',
+    }),
+    createGroupUseCase.execute({
+      name: 'Pelada da PF',
+      userId,
+      description:
+        'Grupo de futebol fundado há mais de 10 anos com jogos localizados na Associação da Polícia Federal no Turu',
+    }),
+  ]);
 
   return [firstGroup, secondGroup];
 }
@@ -211,18 +213,20 @@ async function main() {
     console.log(`${maxPlayerLimit} players added to group ${groups[0].name}`);
     console.log(`${maxPlayerLimit} players added to group ${groups[1].name}`);
 
-    const firstMatch = await createFakeMatch(
-      myPlayer.userId,
-      groups[0]._id.toString(),
-      maxPlayerLimit,
-      6,
-    );
-    const secondMatch = await createFakeMatch(
-      myPlayer.userId,
-      groups[1]._id.toString(),
-      maxPlayerLimit,
-      6,
-    );
+    const [firstMatch, secondMatch] = await Promise.all([
+      createFakeMatch(
+        myPlayer.userId,
+        groups[0]._id.toString(),
+        maxPlayerLimit,
+        6,
+      ),
+      createFakeMatch(
+        myPlayer.userId,
+        groups[1]._id.toString(),
+        maxPlayerLimit,
+        6,
+      ),
+    ]);
 
     const confirmPromises = [];
     for (let count = 0; count < maxPlayerLimit; count += 1) {
