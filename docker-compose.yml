@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  mongo:
+    image: mongo:latest
+    container_name: playfields_mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    networks:
+      - app_network
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh localhost:27017/test --quiet
+      interval: 10s
+      retries: 5
+    volumes:
+      - mongo_data:/data/db
+
+  app:
+    container_name: app_playfieldz
+    environment:
+      MONGO_URL: mongodb://mongo:27017/playfields
+      PORT: 3000
+      JWT_HASH_MD5: d130b96005749c3b93f9d96c38872cdb
+    restart: unless-stopped
+    depends_on:
+      mongo:
+        condition: service_healthy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    networks:
+      - app_network
+    command: "node dist/main/index.js"
+
+networks:
+  app_network:
+    driver: bridge
+
+volumes:
+  mongo_data:

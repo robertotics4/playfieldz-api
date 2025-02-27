@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { Player } from './Player';
 
 export enum UserPermission {
@@ -8,12 +7,12 @@ export enum UserPermission {
 }
 
 export type UserRole = {
-  groupId: Types.ObjectId;
+  groupId: string;
   permission: UserPermission;
 };
 
 export class User {
-  _id: Types.ObjectId;
+  _id: string;
 
   name: string;
 

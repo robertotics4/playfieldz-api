@@ -40,8 +40,7 @@ export class UpdatePlayerPresenceUseCase
 
     const userPermission = user.roles.find(r => {
       return (
-        r.groupId.equals(match.group._id) &&
-        r.permission === UserPermission.PLAYER
+        r.groupId === match.group._id && r.permission === UserPermission.PLAYER
       );
     });
 
@@ -68,8 +67,8 @@ export class UpdatePlayerPresenceUseCase
     value: boolean,
   ) {
     if (value === true) {
-      const playerAlreadyExists = match.matchPlayers.find(matchPlayer =>
-        matchPlayer._id.equals(player._id),
+      const playerAlreadyExists = match.matchPlayers.find(
+        matchPlayer => matchPlayer._id === player._id,
       );
 
       if (playerAlreadyExists) {
@@ -80,8 +79,8 @@ export class UpdatePlayerPresenceUseCase
         matchPlayers: [...match.matchPlayers, player],
       });
     } else {
-      const playerExists = match.matchPlayers.find(matchPlayer =>
-        matchPlayer._id.equals(player._id),
+      const playerExists = match.matchPlayers.find(
+        matchPlayer => matchPlayer._id === player._id,
       );
 
       if (!playerExists) {
@@ -89,7 +88,7 @@ export class UpdatePlayerPresenceUseCase
       }
 
       const matchPlayersWithoutCurrent = match.matchPlayers.filter(
-        matchPlayer => !matchPlayer._id.equals(player._id),
+        matchPlayer => matchPlayer._id !== player._id,
       );
 
       await this.matchRepository.update(match._id, {

@@ -1,4 +1,3 @@
-import { Types } from 'mongoose';
 import { Player } from './Player';
 import { User } from './User';
 
@@ -13,7 +12,7 @@ export type PlayerSubscription = {
 };
 
 export class Group {
-  _id: Types.ObjectId;
+  _id: string;
 
   name: string;
 

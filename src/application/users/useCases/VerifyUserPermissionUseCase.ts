@@ -46,9 +46,7 @@ export class VerifyUserPermissionUseCase
 
   private verifyPermission(user: User, group: Group): boolean {
     const hasPermission = user.roles.some(r => {
-      return (
-        r.groupId.equals(group._id) && r.permission === UserPermission.ADMIN
-      );
+      return r.groupId === group._id && r.permission === UserPermission.ADMIN;
     });
 
     return hasPermission;

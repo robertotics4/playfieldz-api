@@ -7,7 +7,6 @@ import {
   UserPermission,
 } from '@/domain';
 import { ICreateGroupUseCase } from '@/domain/interfaces/useCases/groups/ICreateGroupUseCase';
-import { Types } from 'mongoose';
 import { inject, injectable } from 'tsyringe';
 
 @injectable()
@@ -19,7 +18,7 @@ export class CreateGroupUseCase implements ICreateGroupUseCase {
 
   async execute(dto: CreateGroupDTO): Promise<Group> {
     const user = await this.userRepository.findOne({
-      _id: new Types.ObjectId(dto.userId),
+      _id: dto.userId,
     });
 
     if (!user) {

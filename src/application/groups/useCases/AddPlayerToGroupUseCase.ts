@@ -40,7 +40,7 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
         userId: player.userId,
         roles: [
           {
-            groupId: new Types.ObjectId(groupId),
+            groupId,
             permission: UserPermission.PLAYER,
           },
         ],
@@ -59,8 +59,8 @@ export class AddPlayerToGroupUseCase implements IAddPlayerToGroupUseCase {
       throw new AppError('Grupo não encontrado');
     }
 
-    const playerAlreadyExists = group.playerSubscriptions.find(subscription =>
-      subscription.player._id.equals(new Types.ObjectId(playerId)),
+    const playerAlreadyExists = group.playerSubscriptions.find(
+      subscription => subscription.player._id === playerId,
     );
 
     if (playerAlreadyExists) {
